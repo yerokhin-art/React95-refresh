@@ -62,7 +62,7 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     const tabRowsToRender = useMemo(() => {
       const childrenWithProps =
         React.Children.map(children, child => {
-          if (!React.isValidElement(child)) {
+          if (!React.isValidElement<TabProps>(child)) {
             return null;
           }
           const tabProps = {
