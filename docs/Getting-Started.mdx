@@ -4,39 +4,39 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Installation
 
-React95 is available as an [npm package](https://www.npmjs.com/package/react95).
+React95 Refresh is available as an [npm package](https://www.npmjs.com/package/react95-refresh).
 
-## npm
+## Package Manager
 
 To install and save your `package.json` dependencies, run:
 
 ```sh
 # pnpm
-pnpm add react95 styled-components
+pnpm add react95-refresh styled-components
 
 # npm
-npm install react95 styled-components
+npm install react95-refresh styled-components
 ```
 
-In order to have `react95` working properly, you'll also need
+In order to have `react95-refresh` working properly, you'll also need
 [styled-components 💅](https://github.com/styled-components/styled-components),
 this way you can use custom themes and get the best of the library 🙂
 
 ## Usage
 
-Apply style reset, wrap your app content with ThemeProvider with theme of your
+Apply style reset, wrap your app content with `ThemeProvider` with a theme of your
 choice... and you are ready to go! 🚀
 
-```jsx
-import { MenuList, MenuListItem, Separator, styleReset } from 'react95';
+```tsx
+import { MenuList, MenuListItem, Separator, styleReset } from 'react95-refresh';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 /* Pick a theme of your choice */
-import original from 'react95/themes/original';
+import original from 'react95-refresh/themes/original';
 
 /* Original Windows95 font (optional) */
-import ms_sans_serif from 'react95/dist/fonts/ms_sans_serif.woff2';
-import ms_sans_serif_bold from 'react95/dist/fonts/ms_sans_serif_bold.woff2';
+import ms_sans_serif from 'react95-refresh/dist/fonts/ms_sans_serif.woff2';
+import ms_sans_serif_bold from 'react95-refresh/dist/fonts/ms_sans_serif_bold.woff2';
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}

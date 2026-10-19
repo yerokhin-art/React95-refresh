@@ -1,53 +1,53 @@
-<h1 align="center">React95</h1>
+<h1 align="center">React95 Refresh</h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/react95"><img src="https://flat.badgen.net/npm/dt/react95" alt="NPM" /></a>
-  <a href="https://github.com/arturbien/React95/actions/workflows/release.yml"><img src="https://github.com/arturbien/React95/actions/workflows/release.yml/badge.svg" alt="release status" /></a>
-  <a href="https://www.npmjs.com/package/react95"><img src="https://flat.badgen.net/npm/v/react95" alt="React95 version" /></a>
-  <a href="https://www.npmjs.com/package/react95"><img src="https://flat.badgen.net/npm/license/react95" alt="React95 license" /></a>
-  <a href="https://twitter.com/intent/follow?screen_name=react95_io"><img src="https://img.shields.io/twitter/follow/react95_io" alt="React95 license" /></a>
+  <a href="https://www.npmjs.com/package/react95-refresh"><img src="https://flat.badgen.net/npm/v/react95-refresh" alt="react95-refresh version" /></a>
+  <a href="https://www.npmjs.com/package/react95-refresh"><img src="https://flat.badgen.net/npm/license/react95-refresh" alt="react95-refresh license" /></a>
 </p>
-<h3 align="center">
-  <a href="https://storybook.react95.io/?path=/story/window--default">Components</a> -
-  <a href="https://coins95.web.app/">Demo app</a> -
-  <a href="https://github.com/react95-io/react95-native">React Native</a> -
-  <a href="https://join.slack.com/t/react95/shared_invite/enQtOTA1NzEyNjAyNTc4LWYxZjU3NWRiMWJlMGJiMjhkNzE2MDA3ZmZjZDc1YmY0ODdlZjMwZDA1NWJiYWExYmY1NTJmNmE4OWVjNWFhMTE">Slack</a> -
-  <a href="https://www.paypal.me/react95">PayPal donation 💰</a>
-</h3>
+
 <p align="center">
-  <b>Refreshed</b> Windows95 UI components for your modern React apps. <br /> Built with styled-components 💅</p>
+  <b>Refreshed</b> Windows 95 UI components for modern React 19 apps.<br />
+  Built with <a href="https://styled-components.com/">styled-components v6</a> 💅 &amp; pre-compiled with <b>React Compiler</b> ⚡
+</p>
 
 ![hero](https://user-images.githubusercontent.com/28541613/81947711-28b05580-9601-11ea-964a-c3a6de998496.png)
 
-### Support
+## About This Fork
 
-- [Become a backer or sponsor on Patreon](https://www.patreon.com/arturbien)
-- [One-time donation via PayPal](https://www.paypal.me/react95)
+**React95 Refresh** (`react95-refresh`) is a modernized, actively maintained fork of the original [React95](https://github.com/arturbien/React95) library created by [Artur Bień](https://github.com/arturbien), with a complete refresh of all dependencies, build tooling, and internal architecture:
+
+- **React 19 + React Compiler** — Full support for React 19, native `React.useId`, removal of legacy `findDOMNode`, and pre-compiled bundle output via `babel-plugin-react-compiler`.
+- **styled-components v6** — Migrated to v6 with proper transient (`$`) props and `shouldForwardProp` filtering (zero React DOM attribute warnings).
+- **TypeScript 7** — Strict type definitions with modern ESM (`*.d.mts`) and CJS (`*.d.ts`) package `exports`.
+- **Rolldown (`tsdown`)** — Ultra-fast ESM + CJS builds powered by Rolldown.
+- **Vitest 5 & Vite 8** — Modernized test runner and Storybook 10 (`@storybook/react-vite`) environment.
+- **Biome** — Unified, fast linting and code formatting.
 
 ## Getting Started
 
-First, install component library and styled-components in your project directory:
+First, install the component library and `styled-components` in your project directory:
 
 ```sh
-# yarn
-$ yarn add react95 styled-components
+# pnpm
+pnpm add react95-refresh styled-components
 
 # npm
-$ npm install react95 styled-components
+npm install react95-refresh styled-components
+
+# yarn
+yarn add react95-refresh styled-components
 ```
 
-Apply style reset, wrap your app with ThemeProvider with theme of your choice... and you are ready to go! 🚀
+Apply `styleReset`, wrap your app with `ThemeProvider` using a theme of your choice, and you are ready to go! 🚀
 
-```jsx
-import React from 'react';
+```tsx
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-
-import { MenuList, MenuListItem, Separator, styleReset } from 'react95';
+import { MenuList, MenuListItem, Separator, styleReset } from 'react95-refresh';
 // pick a theme of your choice
-import original from 'react95/dist/themes/original';
-// original Windows95 font (optionally)
-import ms_sans_serif from 'react95/dist/fonts/ms_sans_serif.woff2';
-import ms_sans_serif_bold from 'react95/dist/fonts/ms_sans_serif_bold.woff2';
+import original from 'react95-refresh/themes/original';
+// original Windows95 font (optional)
+import ms_sans_serif from 'react95-refresh/dist/fonts/ms_sans_serif.woff2';
+import ms_sans_serif_bold from 'react95-refresh/dist/fonts/ms_sans_serif_bold.woff2';
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}
@@ -85,12 +85,10 @@ const App = () => (
 export default App;
 ```
 
-### Submit your project
+## Contributing
 
-Apps built with React95 will be featured on the official React95 [website](https://react95.io) 🤟🏻
+Feel free to open pull requests and submit issues or component proposals in [yerokhin-art/React95-refresh](https://github.com/yerokhin-art/React95-refresh). Let's keep this retro UI alive in the modern React ecosystem! ♥️
 
-### Contributing
+## License
 
-Any help from UI / UX designers would be EXTREMELY appreciated. The challenge is to come up with new component designs / layouts that are broadly used in modern UIs, that weren't present back in 95.
-
-If you want to help with the project, feel free to open pull requests and submit issues or component proposals. Let's bring this UI back to life ♥️
+MIT © [Artur Bień](https://github.com/arturbien) (Original Author) & [Artur Yerokhin](https://github.com/yerokhin-art) (Fork Maintainer & Modifications)
