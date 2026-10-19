@@ -1,8 +1,9 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 
 import styled from 'styled-components';
 import { createBorderStyles, createBoxStyles } from '../common';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type TabBodyProps = {
   children: React.ReactNode;
@@ -30,4 +31,4 @@ const TabBody = forwardRef<HTMLDivElement, TabBodyProps>(
 
 TabBody.displayName = 'TabBody';
 
-export { TabBody, TabBodyProps };
+export { TabBody, type TabBodyProps };

@@ -1,4 +1,4 @@
-import { MenuList, MenuListProps } from '../MenuList/MenuList';
+import { MenuList, type MenuListProps } from '../MenuList/MenuList';
 
 /** @deprecated Use `MenuListProps` */
 export type ListProps = MenuListProps;

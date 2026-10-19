@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { Avatar } from 'react95';
 import styled from 'styled-components';
 
@@ -15,7 +14,7 @@ export default {
   title: 'Other/Avatar',
   component: Avatar,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Avatar>;
+} as Meta<typeof Avatar>;
 
 export function Default() {
   return (

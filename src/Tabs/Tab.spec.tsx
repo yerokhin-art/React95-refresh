@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { fireEvent } from '@testing-library/react';
 import { renderWithTheme } from '../../test/utils';
 import { Tab } from './Tab';
 
@@ -23,10 +22,10 @@ describe('<Tab />', () => {
 
   describe('prop: onClick', () => {
     it('should be called when a click is triggered', () => {
-      const handleClick = jest.fn();
+      const handleClick = vi.fn();
       const { getByRole } = renderWithTheme(<Tab onClick={handleClick} />);
 
-      getByRole('tab').click();
+      fireEvent.click(getByRole('tab'));
 
       expect(handleClick).toHaveBeenCalledTimes(1);
     });

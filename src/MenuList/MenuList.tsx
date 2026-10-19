@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
 
 import styled from 'styled-components';
 import { createBorderStyles, createBoxStyles } from '../common';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type MenuListProps = React.HTMLAttributes<HTMLUListElement> & {
   fullWidth?: boolean;
@@ -10,10 +10,16 @@ type MenuListProps = React.HTMLAttributes<HTMLUListElement> & {
   inline?: boolean;
 } & CommonStyledProps;
 
+const menuListFilteredProps = new Set(['fullWidth', 'shadow', 'inline']);
+
 // TODO keyboard controls
-const MenuList = styled.ul.attrs(() => ({
-  role: 'menu'
-}))<MenuListProps>`
+const MenuList = styled.ul
+  .withConfig({
+    shouldForwardProp: prop => !menuListFilteredProps.has(prop)
+  })
+  .attrs(() => ({
+    role: 'menu'
+  }))<MenuListProps>`
   box-sizing: border-box;
   width: ${props => (props.fullWidth ? '100%' : 'auto')};
   padding: 4px;
@@ -33,4 +39,4 @@ MenuList.displayName = 'MenuList';
 
 export * from './MenuListItem';
 
-export { MenuList, MenuListProps };
+export { MenuList, type MenuListProps };

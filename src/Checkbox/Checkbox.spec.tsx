@@ -1,5 +1,5 @@
-import React from 'react';
-
+import { fireEvent } from '@testing-library/react';
+import type React from 'react';
 import { renderWithTheme } from '../../test/utils';
 import { Checkbox } from './Checkbox';
 
@@ -16,12 +16,14 @@ describe('<Checkbox />', () => {
 
   describe('prop: onChange', () => {
     it('should call onChange when uncontrolled', () => {
-      const handleChange = jest.fn(event => event.target.checked);
+      const handleChange = vi.fn(
+        (event: React.ChangeEvent<HTMLInputElement>) => event.target.checked
+      );
       const { getByRole } = renderWithTheme(
         <Checkbox onChange={handleChange} />
       );
 
-      getByRole('checkbox').click();
+      fireEvent.click(getByRole('checkbox'));
 
       expect(handleChange).toHaveBeenCalledTimes(1);
       // event.target.check is true
@@ -30,13 +32,15 @@ describe('<Checkbox />', () => {
 
     it('should call onChange when controlled', () => {
       const checked = true;
-      const handleChange = jest.fn(event => event.target.checked);
+      const handleChange = vi.fn(
+        (event: React.ChangeEvent<HTMLInputElement>) => event.target.checked
+      );
 
       const { getByRole } = renderWithTheme(
         <Checkbox onChange={handleChange} checked={checked} />
       );
 
-      getByRole('checkbox').click();
+      fireEvent.click(getByRole('checkbox'));
 
       expect(handleChange).toHaveBeenCalledTimes(1);
 
@@ -46,7 +50,7 @@ describe('<Checkbox />', () => {
 
   describe('prop: disabled', () => {
     it('should disable checkbox', () => {
-      const handleChange = jest.fn();
+      const handleChange = vi.fn();
 
       const { getByRole } = renderWithTheme(
         <Checkbox disabled onChange={handleChange} />
@@ -54,7 +58,7 @@ describe('<Checkbox />', () => {
       const checkbox = getByRole('checkbox');
       expect(checkbox).toHaveAttribute('disabled');
 
-      checkbox.click();
+      fireEvent.click(checkbox);
       expect(handleChange).not.toHaveBeenCalled();
     });
     it('should be overridden by props', () => {
@@ -136,11 +140,11 @@ describe('<Checkbox />', () => {
 
       expect(checkbox.checked).toBe(true);
 
-      checkbox.click();
+      fireEvent.click(checkbox);
 
       expect(checkbox.checked).toBe(false);
 
-      checkbox.click();
+      fireEvent.click(checkbox);
 
       expect(checkbox.checked).toBe(true);
     });

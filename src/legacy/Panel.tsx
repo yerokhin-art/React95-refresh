@@ -1,4 +1,4 @@
-import { Frame, FrameProps } from '../Frame/Frame';
+import { Frame, type FrameProps } from '../Frame/Frame';
 
 /** @deprecated Use `FrameProps` */
 export type PanelProps = FrameProps;

@@ -1,4 +1,5 @@
-import React, { forwardRef, useCallback } from 'react';
+import type React from 'react';
+import { forwardRef, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import { Button } from '../Button/Button';
@@ -6,7 +7,7 @@ import useControlledOrUncontrolled from '../common/hooks/useControlledOrUncontro
 import { blockSizes } from '../common/system';
 import { clamp, getSize } from '../common/utils';
 import { TextInput } from '../TextInput/TextInput';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type NumberInputProps = {
   className?: string;
@@ -43,14 +44,16 @@ const StyledButton = styled(Button)`
         `}
 `;
 
-const StyledButtonWrapper = styled.div<Pick<NumberInputProps, 'variant'>>`
+const StyledButtonWrapper = styled.div<{
+  $variant?: NumberInputProps['variant'];
+}>`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-between;
 
-  ${({ variant }) =>
-    variant === 'flat'
+  ${({ $variant }) =>
+    $variant === 'flat'
       ? css`
           height: calc(${blockSizes.md} - 4px);
         `
@@ -60,12 +63,12 @@ const StyledButtonWrapper = styled.div<Pick<NumberInputProps, 'variant'>>`
         `}
 `;
 
-const StyledButtonIcon = styled.span<{ invert?: boolean }>`
+const StyledButtonIcon = styled.span<{ $invert?: boolean }>`
   width: 0px;
   height: 0px;
   display: inline-block;
-  ${({ invert }) =>
-    invert
+  ${({ $invert }) =>
+    $invert
       ? css`
           border-left: 4px solid transparent;
           border-right: 4px solid transparent;
@@ -80,8 +83,8 @@ const StyledButtonIcon = styled.span<{ invert?: boolean }>`
     filter: drop-shadow(
       1px 1px 0px ${({ theme }) => theme.materialTextDisabledShadow}
     );
-    ${({ invert }) =>
-      invert
+    ${({ $invert }) =>
+      $invert
         ? css`
             border-bottom-color: ${({ theme }) => theme.materialTextDisabled};
           `
@@ -174,14 +177,14 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           fullWidth
           onBlur={onBlur}
         />
-        <StyledButtonWrapper variant={variant}>
+        <StyledButtonWrapper $variant={variant}>
           <StyledButton
             data-testid='increment'
             variant={buttonVariant}
             disabled={disabled || readOnly}
             onClick={stepUp}
           >
-            <StyledButtonIcon invert />
+            <StyledButtonIcon $invert />
           </StyledButton>
           <StyledButton
             data-testid='decrement'
@@ -199,4 +202,4 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
 NumberInput.displayName = 'NumberInput';
 
-export { NumberInput, NumberInputProps };
+export { NumberInput, type NumberInputProps };

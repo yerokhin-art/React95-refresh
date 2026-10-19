@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { blockSizes } from '../common/system';
 
@@ -33,4 +34,4 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
 
 TableRow.displayName = 'TableRow';
 
-export { TableRow, TableRowProps };
+export { TableRow, type TableRowProps };

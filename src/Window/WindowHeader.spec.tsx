@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { renderWithTheme, theme } from '../../test/utils';
 
 import { WindowHeader } from './WindowHeader';

@@ -1,7 +1,7 @@
-import React from 'react';
+import type React from 'react';
 import styled from 'styled-components';
-import { CommonStyledProps } from '../types';
 import { getSize } from '../common/utils';
+import type { CommonStyledProps } from '../types';
 
 type HandleProps = {
   size?: string | number;
@@ -10,7 +10,9 @@ type HandleProps = {
 
 // TODO: add horizontal variant
 // TODO: allow user to specify number of bars (like 3 horizontal bars for drag handle)
-const Handle = styled.div<HandleProps>`
+const Handle = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'size'
+})<HandleProps>`
   ${({ theme, size = '100%' }) => `
   display: inline-block;
   box-sizing: border-box;
@@ -26,4 +28,4 @@ const Handle = styled.div<HandleProps>`
 
 Handle.displayName = 'Handle';
 
-export { Handle, HandleProps };
+export { Handle, type HandleProps };

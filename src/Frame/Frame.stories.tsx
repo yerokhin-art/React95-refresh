@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { Frame } from 'react95';
 import styled from 'styled-components';
 
@@ -22,7 +21,7 @@ export default {
   title: 'Layout/Frame',
   component: Frame,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Frame>;
+} as Meta<typeof Frame>;
 
 export function Default() {
   return (

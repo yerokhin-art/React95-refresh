@@ -1,5 +1,5 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import { useState } from 'react';
 import {
   AppBar,
   Button,
@@ -21,7 +21,7 @@ export default {
   title: 'Environment/AppBar',
   component: AppBar,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof AppBar>;
+} as Meta<typeof AppBar>;
 
 export function Default() {
   const [open, setOpen] = useState(false);

@@ -1,7 +1,8 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { getSize } from '../common/utils';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 import base64hourglass from './base64hourglass';
 
 type HourglassProps = {
@@ -9,10 +10,12 @@ type HourglassProps = {
 } & React.HTMLAttributes<HTMLDivElement> &
   CommonStyledProps;
 
-const StyledContainer = styled.div<Required<Pick<HourglassProps, 'size'>>>`
+const StyledContainer = styled.div<{
+  $size: NonNullable<HourglassProps['size']>;
+}>`
   display: inline-block;
-  height: ${({ size }) => getSize(size)};
-  width: ${({ size }) => getSize(size)};
+  height: ${({ $size }) => getSize($size)};
+  width: ${({ $size }) => getSize($size)};
 `;
 
 const StyledHourglass = styled.span`
@@ -23,10 +26,10 @@ const StyledHourglass = styled.span`
   height: 100%;
 `;
 
-const Hourglass = forwardRef<HTMLSpanElement, HourglassProps>(
+const Hourglass = forwardRef<HTMLDivElement, HourglassProps>(
   ({ size = 30, ...otherProps }, ref) => {
     return (
-      <StyledContainer size={size} ref={ref} {...otherProps}>
+      <StyledContainer $size={size} ref={ref} {...otherProps}>
         <StyledHourglass />
       </StyledContainer>
     );
@@ -35,4 +38,4 @@ const Hourglass = forwardRef<HTMLSpanElement, HourglassProps>(
 
 Hourglass.displayName = 'Hourglass';
 
-export { Hourglass, HourglassProps };
+export { Hourglass, type HourglassProps };

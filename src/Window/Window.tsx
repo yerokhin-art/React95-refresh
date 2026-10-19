@@ -1,7 +1,8 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { createBorderStyles, createBoxStyles } from '../common';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps, CommonThemeProps } from '../types';
 
 type WindowProps = {
   children?: React.ReactNode;
@@ -11,7 +12,7 @@ type WindowProps = {
 } & React.HTMLAttributes<HTMLDivElement> &
   CommonStyledProps;
 
-const StyledWindow = styled.div`
+const StyledWindow = styled.div<CommonThemeProps>`
   position: relative;
   padding: 4px;
   font-size: 1rem;
@@ -53,7 +54,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(
     ref
   ) => {
     return (
-      <StyledWindow ref={ref} shadow={shadow} {...otherProps}>
+      <StyledWindow ref={ref} $shadow={shadow} {...otherProps}>
         {children}
         {resizable && (
           <ResizeHandle data-testid='resizeHandle' ref={resizeRef} />
@@ -69,4 +70,4 @@ export * from './WindowContent';
 
 export * from './WindowHeader';
 
-export { Window, WindowProps };
+export { Window, type WindowProps };

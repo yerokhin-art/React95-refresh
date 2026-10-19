@@ -1,5 +1,11 @@
-import { EventType, fireEvent, render, screen } from '@testing-library/react';
-import React, { forwardRef } from 'react';
+import {
+  type EventType,
+  fireEvent,
+  render,
+  screen
+} from '@testing-library/react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import {
   isReactFocusEvent,
   isReactKeyboardEvent,
@@ -74,7 +80,8 @@ const OnEverything = forwardRef<
 });
 
 const renderEventTester = async () => {
-  const callback = jest.fn<void, [React.SyntheticEvent<HTMLInputElement>]>();
+  const callback =
+    vi.fn<(event: React.SyntheticEvent<HTMLInputElement>) => void>();
   render(<OnEverything callback={callback} />);
   const input = await screen.findByRole('textbox');
 
@@ -94,7 +101,7 @@ describe(isReactFocusEvent, () => {
     fireEventFunctionName: keyof typeof fireEvent,
     init?: EventInit
   ) => React.SyntheticEvent<HTMLInputElement, Event>;
-  beforeAll(async () => {
+  beforeEach(async () => {
     ({ emit } = await renderEventTester());
   });
 
@@ -113,7 +120,7 @@ describe(isReactKeyboardEvent, () => {
     fireEventFunctionName: keyof typeof fireEvent,
     init?: EventInit
   ) => React.SyntheticEvent<HTMLInputElement, Event>;
-  beforeAll(async () => {
+  beforeEach(async () => {
     ({ emit } = await renderEventTester());
   });
 
@@ -121,7 +128,9 @@ describe(isReactKeyboardEvent, () => {
     'returns correct results for %s',
     focusEventType => {
       expect(isReactKeyboardEvent(new Event(focusEventType))).toBeFalsy();
-      const event = emit(keyboardEventTypesMap[focusEventType]);
+      const event = emit(keyboardEventTypesMap[focusEventType], {
+        charCode: 97
+      } as KeyboardEventInit);
       expect(isReactKeyboardEvent(event)).toBeTruthy();
     }
   );
@@ -132,7 +141,7 @@ describe(isReactMouseEvent, () => {
     fireEventFunctionName: keyof typeof fireEvent,
     init?: EventInit
   ) => React.SyntheticEvent<HTMLInputElement, Event>;
-  beforeAll(async () => {
+  beforeEach(async () => {
     ({ emit } = await renderEventTester());
   });
 

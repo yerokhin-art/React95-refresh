@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 import { renderWithTheme } from '../../test/utils';
 
@@ -38,7 +38,7 @@ describe('<Counter />', () => {
       );
       const counter = container.firstElementChild;
 
-      expect(counter && counter.childElementCount).toBe(7);
+      expect(counter?.childElementCount).toBe(7);
     });
 
     it('value length takes priority if bigger than minLength', () => {
@@ -47,7 +47,7 @@ describe('<Counter />', () => {
       );
       const counter = container.firstElementChild;
 
-      expect(counter && counter.childElementCount).toBe(4);
+      expect(counter?.childElementCount).toBe(4);
     });
   });
 });

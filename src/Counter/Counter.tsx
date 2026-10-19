@@ -1,8 +1,9 @@
-import React, { forwardRef, useMemo } from 'react';
+import type React from 'react';
+import { forwardRef, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { createBorderStyles } from '../common';
-import { CommonStyledProps, Sizes } from '../types';
+import type { CommonStyledProps, Sizes } from '../types';
 import { Digit } from './Digit';
 
 type CounterProps = {
@@ -43,4 +44,4 @@ const Counter = forwardRef<HTMLDivElement, CounterProps>(
 
 Counter.displayName = 'Counter';
 
-export { Counter, CounterProps };
+export { Counter, type CounterProps };

@@ -1,8 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
-import styled from 'styled-components';
-
+import type { Meta } from '@storybook/react-vite';
 import { ColorInput, ScrollView } from 'react95';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.material};
@@ -31,7 +29,7 @@ export default {
   title: 'Controls/ColorInput',
   component: ColorInput,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof ColorInput>;
+} as Meta<typeof ColorInput>;
 
 export function Default() {
   return (

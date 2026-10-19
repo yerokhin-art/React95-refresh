@@ -1,4 +1,5 @@
-import React, { forwardRef, useCallback, useMemo, useState } from 'react';
+import type React from 'react';
+import { forwardRef, useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { Button } from '../Button/Button';
@@ -209,5 +210,4 @@ const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
 DatePicker.displayName = 'DatePicker';
 
-// eslint-disable-next-line camelcase
-export { DatePicker as DatePicker__UNSTABLE, DatePickerProps };
+export { DatePicker as DatePicker__UNSTABLE, type DatePickerProps };

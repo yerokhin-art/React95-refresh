@@ -1,8 +1,6 @@
 import { fireEvent } from '@testing-library/react';
-import React from 'react';
-
-import { Tab } from '..';
 import { renderWithTheme } from '../../test/utils';
+import { Tab } from '..';
 import { Tabs } from './Tabs';
 
 describe('<Tabs />', () => {
@@ -51,7 +49,7 @@ describe('<Tabs />', () => {
   });
   describe('prop: onChange', () => {
     it('should call onChange when clicking', () => {
-      const handleChange = jest.fn();
+      const handleChange = vi.fn();
       const { getAllByRole } = renderWithTheme(
         <Tabs value={0} onChange={handleChange}>
           <Tab value={0} />

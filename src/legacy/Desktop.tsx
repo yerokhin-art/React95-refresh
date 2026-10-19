@@ -1,4 +1,4 @@
-import { Monitor, MonitorProps } from '../Monitor/Monitor';
+import { Monitor, type MonitorProps } from '../Monitor/Monitor';
 
 /** @deprecated Use `MonitorProps` */
 export type DesktopProps = MonitorProps;

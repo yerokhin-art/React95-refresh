@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import React from 'react';
 
 import { renderWithTheme, theme } from '../../test/utils';
 
@@ -16,7 +15,7 @@ describe('<Avatar />', () => {
     const { container } = render(<Avatar>Avatar children</Avatar>);
     const avatarEl = container.firstElementChild;
 
-    expect(avatarEl && avatarEl.innerHTML).toBe('Avatar children');
+    expect(avatarEl?.innerHTML).toBe('Avatar children');
   });
 
   it('should handle border properly', () => {
@@ -51,7 +50,7 @@ describe('<Avatar />', () => {
     const { findByAltText } = render(<Avatar src={catGif} alt='cat avatar' />);
     const imageEl = (await findByAltText('cat avatar')) as HTMLImageElement;
 
-    expect(imageEl && imageEl.src).toBe(catGif);
+    expect(imageEl?.src).toBe(catGif);
   });
 
   it('should render source with priority over children', async () => {

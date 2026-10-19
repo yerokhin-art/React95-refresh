@@ -13,11 +13,8 @@ export default function useEventCallback<Args extends unknown[], Return>(
   useEnhancedEffect(() => {
     ref.current = fn;
   });
-  return React.useCallback(
-    (...args: Args) =>
-      // @ts-expect-error hide `this`
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      (0, ref.current!)(...args),
-    []
-  );
+  return React.useCallback((...args: Args) => {
+    const callback = ref.current;
+    return callback(...args);
+  }, []);
 }

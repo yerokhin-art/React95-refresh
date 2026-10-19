@@ -1,6 +1,7 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type WindowContentProps = {
   children?: React.ReactNode;
@@ -23,4 +24,4 @@ const WindowContent = forwardRef<HTMLDivElement, WindowContentProps>(
 
 WindowContent.displayName = 'WindowContent';
 
-export { WindowContent, WindowContentProps };
+export { WindowContent, type WindowContentProps };

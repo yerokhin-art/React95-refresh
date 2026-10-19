@@ -1,5 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import type React from 'react';
+import { useState } from 'react';
 import {
   Anchor,
   Checkbox,
@@ -24,7 +25,7 @@ export default {
   component: Tabs,
   subcomponents: { Tab, TabBody },
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Tabs>;
+} as Meta<typeof Tabs>;
 
 export function Default() {
   const [state, setState] = useState({

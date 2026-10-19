@@ -2,21 +2,21 @@ import React, { forwardRef, useMemo } from 'react';
 
 import styled from 'styled-components';
 import { noOp } from '../common/utils';
-import { CommonStyledProps } from '../types';
-import { TabProps } from './Tab';
+import type { CommonStyledProps } from '../types';
+import type { TabProps } from './Tab';
 
 type TabsProps = {
   value?: TabProps['value'];
   onChange?: TabProps['onClick'];
   children?: React.ReactNode;
   rows?: number;
-} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange' | 'value'> &
+} & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> &
   CommonStyledProps;
 
-const StyledTabs = styled.div<{ isMultiRow: boolean }>`
+const StyledTabs = styled.div<{ $isMultiRow: boolean }>`
   position: relative;
-  ${({ isMultiRow, theme }) =>
-    isMultiRow &&
+  ${({ $isMultiRow, theme }) =>
+    $isMultiRow &&
     `
   button {
     flex-grow: 1;
@@ -27,9 +27,7 @@ const StyledTabs = styled.div<{ isMultiRow: boolean }>`
   `}
 `;
 
-const Row = styled.div.attrs(() => ({
-  'data-testid': 'tab-row'
-}))`
+const Row = styled.div`
   position: relative;
   display: flex;
   flex-wrap: no-wrap;
@@ -89,12 +87,14 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     return (
       <StyledTabs
         {...otherProps}
-        isMultiRow={rows > 1}
+        $isMultiRow={rows > 1}
         role='tablist'
         ref={ref}
       >
         {tabRowsToRender.map(row => (
-          <Row key={row.key}>{row.tabs}</Row>
+          <Row data-testid='tab-row' key={row.key}>
+            {row.tabs}
+          </Row>
         ))}
       </StyledTabs>
     );
@@ -107,4 +107,4 @@ export * from './Tab';
 
 export * from './TabBody';
 
-export { Tabs, TabsProps };
+export { Tabs, type TabsProps };

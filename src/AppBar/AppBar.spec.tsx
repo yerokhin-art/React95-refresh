@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import React from 'react';
 
 import { AppBar } from './AppBar';
 
@@ -10,7 +9,7 @@ describe('<AppBar />', () => {
     const { container } = render(<AppBar {...defaultProps} />);
     const headerEl = container.firstElementChild;
 
-    expect(headerEl && headerEl.tagName).toBe('HEADER');
+    expect(headerEl?.tagName).toBe('HEADER');
   });
 
   it('should render children', () => {

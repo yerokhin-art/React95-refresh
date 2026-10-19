@@ -3,7 +3,7 @@ import React from 'react';
 import { renderWithTheme } from '../../test/utils';
 import { noOp } from '../common/utils';
 import { Select } from './Select';
-import { SelectOption, SelectRef } from './Select.types';
+import type { SelectOption, SelectRef } from './Select.types';
 
 const options: SelectOption<number>[] = [
   { label: 'ten', value: 10 },
@@ -51,7 +51,7 @@ describe('<Select />', () => {
   });
 
   it('passes through the blur event when menu is closed', () => {
-    const handleBlur = jest.fn();
+    const handleBlur = vi.fn();
     renderWithTheme(
       <Select
         onBlur={handleBlur}
@@ -71,7 +71,7 @@ describe('<Select />', () => {
   it('should ignore onBlur when the menu opens', () => {
     // mousedown calls focus while click opens moving the focus to an item
     // this means the trigger is blurred immediately
-    const handleBlur = jest.fn();
+    const handleBlur = vi.fn();
     renderWithTheme(
       <Select
         onBlur={handleBlur}
@@ -94,7 +94,7 @@ describe('<Select />', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument();
     const o = screen.getAllByRole('option');
     fireEvent.mouseDown(o[0]);
-    o[0].click();
+    fireEvent.click(o[0]);
     expect(handleBlur).toHaveBeenCalledTimes(0);
     expect(screen.queryByRole('listbox', { hidden: false })).toBe(null);
   });
@@ -109,7 +109,7 @@ describe('<Select />', () => {
   });
 
   it('should call onClose when user clicks outside of component', async () => {
-    const handleClose = jest.fn();
+    const handleClose = vi.fn();
     renderWithTheme(
       <div>
         <Select onClose={handleClose} options={options} />
@@ -169,7 +169,7 @@ describe('<Select />', () => {
 
   describe('prop: onClose, onFocus, onKeyDown, onOpen', () => {
     it('passes event through', () => {
-      const handler = jest.fn();
+      const handler = vi.fn();
 
       renderWithTheme(
         <>
@@ -215,7 +215,7 @@ describe('<Select />', () => {
 
   describe('prop: onChange', () => {
     it('should get selected option from arguments', () => {
-      const onChange = jest.fn();
+      const onChange = vi.fn();
       renderWithTheme(
         <Select onChange={onChange} defaultValue={0} options={options} />
       );
@@ -369,7 +369,7 @@ describe('<Select />', () => {
     );
 
     it('closes menu when pressing Escape', async () => {
-      const onClose = jest.fn();
+      const onClose = vi.fn();
       renderWithTheme(
         <Select defaultValue={10} options={options} onClose={onClose} />
       );
@@ -396,8 +396,8 @@ describe('<Select />', () => {
     it.each(['Enter', 'Space', 'Tab'])(
       'selects the active option by pressing %s, closes menu and maintains focus',
       async keyCode => {
-        const onClose = jest.fn();
-        const onKeyDown = jest.fn();
+        const onClose = vi.fn();
+        const onKeyDown = vi.fn();
         renderWithTheme(
           // eslint-disable-next-line jsx-a11y/no-static-element-interactions
           <div onKeyDown={onKeyDown}>
@@ -429,7 +429,7 @@ describe('<Select />', () => {
     );
 
     it('passes through Enter, Escape, Tab and Shift + Tab when closed', () => {
-      const onKeyDown = jest.fn();
+      const onKeyDown = vi.fn();
       renderWithTheme(
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div onKeyDown={onKeyDown}>
@@ -454,7 +454,7 @@ describe('<Select />', () => {
     });
 
     it('passes through keyDown events when modifier keys are pressed', () => {
-      const onKeyDown = jest.fn();
+      const onKeyDown = vi.fn();
       renderWithTheme(
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div onKeyDown={onKeyDown}>
@@ -600,7 +600,7 @@ describe('<Select />', () => {
     });
 
     it('resets typing after timeout', async () => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
       renderWithTheme(<Select defaultValue={10} options={options} />);
       const button = screen.getByRole('button');
       fireEvent.mouseDown(button);
@@ -614,12 +614,12 @@ describe('<Select />', () => {
       fireEvent.keyDown(listbox, { code: 'KeyI' });
       fireEvent.keyDown(listbox, { code: 'KeyR' });
       expect(screen.getByRole('option', { name: 'thirty' })).toHaveFocus();
-      jest.runAllTimers();
+      vi.runAllTimers();
 
       fireEvent.keyDown(listbox, { code: 'KeyT' });
       expect(screen.getByRole('option', { name: 'ten' })).toHaveFocus();
 
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
   });
 

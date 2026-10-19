@@ -1,7 +1,8 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { StyledScrollView } from '../ScrollView/ScrollView';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type TableProps = {
   children?: React.ReactNode;
@@ -42,4 +43,4 @@ export * from './TableHead';
 export * from './TableHeadCell';
 export * from './TableRow';
 
-export { Table, TableProps };
+export { Table, type TableProps };

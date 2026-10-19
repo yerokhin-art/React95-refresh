@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { Monitor } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +11,7 @@ export default {
   title: 'Other/Monitor',
   component: Monitor,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Monitor>;
+} as Meta<typeof Monitor>;
 
 export function Default() {
   return <Monitor backgroundStyles={{ background: 'blue' }} />;

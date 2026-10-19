@@ -1,5 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import type React from 'react';
+import { useState } from 'react';
 import { GroupBox, Radio, ScrollView, Window, WindowContent } from 'react95';
 import styled from 'styled-components';
 
@@ -21,7 +22,7 @@ export default {
   title: 'Controls/Radio',
   component: Radio,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Radio>;
+} as Meta<typeof Radio>;
 
 export function Default() {
   const [state, setState] = useState('Pear');

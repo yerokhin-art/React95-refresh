@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
 export default function useControlledOrUncontrolled<T>({
   defaultValue,
@@ -9,7 +10,6 @@ export default function useControlledOrUncontrolled<T>({
   valuePropName = 'value'
 }: {
   defaultValue: T;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (...args: any[]) => void;
   onChangePropName?: string;
   readOnly?: boolean;
@@ -37,7 +37,6 @@ export default function useControlledOrUncontrolled<T>({
         : `This breaks the component state. You must provide an \`${onChangePropName}\` function that updates \`${valuePropName}\`.`
     }`;
 
-    // eslint-disable-next-line no-console
     console.warn(message);
   }
 

@@ -6,7 +6,7 @@ import useForkRef from './useForkRef';
 const consoleError = console.error;
 
 beforeEach(() => {
-  console.error = jest.fn();
+  console.error = vi.fn();
 });
 
 afterEach(() => {
@@ -15,9 +15,11 @@ afterEach(() => {
 
 describe('useForkRef', () => {
   it('returns a single ref-setter function that forks the ref to its inputs', () => {
-    function Component(props: { innerRef: React.RefObject<HTMLDivElement> }) {
+    function Component(props: {
+      innerRef: React.RefObject<HTMLDivElement | null>;
+    }) {
       const { innerRef } = props;
-      const ownRef = useRef<HTMLDivElement>();
+      const ownRef = useRef<HTMLDivElement | null>(null);
       const [, forceUpdate] = useState(true);
       useEffect(() => forceUpdate(n => !n), []);
 
@@ -51,18 +53,16 @@ describe('useForkRef', () => {
   });
 
   it('does nothing if none of the forked branches requires a ref', () => {
-    const setRef = jest.fn();
+    const setRef = vi.fn();
 
     type OuterProps = {
-      children: React.ReactElement;
+      children: React.ReactElement<{ ref?: React.Ref<null> }>;
     };
 
     const Outer = React.forwardRef<null, OuterProps>((props, ref) => {
       const { children } = props;
 
-      // TODO: Fix this test as reading ref from children is not allowed so not available on React types
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-expect-error
       const handleRef = useForkRef(children?.ref, ref);
       setRef(handleRef);
 

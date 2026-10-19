@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { AppBar, Button, Handle, Toolbar } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +11,7 @@ export default {
   title: 'Controls/Handle',
   component: Handle,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Handle>;
+} as Meta<typeof Handle>;
 
 export function Default() {
   return (

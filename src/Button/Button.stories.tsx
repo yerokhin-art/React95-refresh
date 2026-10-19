@@ -1,5 +1,5 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import { useState } from 'react';
 import {
   Button,
   MenuList,
@@ -32,7 +32,7 @@ export default {
   title: 'Controls/Button',
   component: Button,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Button>;
+} as Meta<typeof Button>;
 
 export function Default() {
   return (

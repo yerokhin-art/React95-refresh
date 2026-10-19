@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import {
   Button,
   Frame,
@@ -67,7 +66,7 @@ export default {
   component: Window,
   subcomponents: { WindowHeader, WindowContent },
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Window>;
+} as Meta<typeof Window>;
 
 export function Default() {
   return (

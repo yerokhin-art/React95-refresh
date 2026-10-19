@@ -1,8 +1,9 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { createBorderStyles, createDisabledTextStyles } from '../common';
 import { noOp } from '../common/utils';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type TableHeadCellProps = {
   children?: React.ReactNode;
@@ -90,4 +91,4 @@ const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps>(
 
 TableHeadCell.displayName = 'TableHeadCell';
 
-export { TableHeadCell, TableHeadCellProps };
+export { TableHeadCell, type TableHeadCellProps };

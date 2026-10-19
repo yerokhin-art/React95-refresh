@@ -1,15 +1,16 @@
-import React, { forwardRef } from 'react';
-import styled, { css, CSSProperties } from 'styled-components';
+import type React from 'react';
+import { forwardRef } from 'react';
+import styled, { type CSSProperties, css } from 'styled-components';
 
 import { createFlatBoxStyles } from '../common';
 import {
   LabelText,
-  size,
   StyledInput,
-  StyledLabel
+  StyledLabel,
+  size
 } from '../common/SwitchBase';
 import { StyledScrollView } from '../ScrollView/ScrollView';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type RadioVariant = 'default' | 'flat';
 
@@ -79,14 +80,11 @@ const StyledFlatCheckbox = styled.div<StyledCheckboxProps>`
 `;
 
 type IconProps = {
-  'data-testid': 'checkmarkIcon';
   $disabled: boolean;
   variant: RadioVariant;
 };
 
-const Icon = styled.span.attrs(() => ({
-  'data-testid': 'checkmarkIcon'
-}))<IconProps>`
+const Icon = styled.span<IconProps>`
   position: absolute;
   content: '';
   display: inline-block;
@@ -114,6 +112,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
       label = '',
       onChange,
       style = {},
+      value,
       variant = 'default',
       ...otherProps
     },
@@ -124,7 +123,13 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
     return (
       <StyledLabel $disabled={disabled} className={className} style={style}>
         <CheckboxComponent $disabled={disabled} role='presentation'>
-          {checked && <Icon $disabled={disabled} variant={variant} />}
+          {checked && (
+            <Icon
+              data-testid='checkmarkIcon'
+              $disabled={disabled}
+              variant={variant}
+            />
+          )}
         </CheckboxComponent>
         <StyledInput
           disabled={disabled}
@@ -132,6 +137,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
           readOnly={disabled}
           type='radio'
           checked={checked}
+          value={typeof value === 'boolean' ? String(value) : value}
           ref={ref}
           {...otherProps}
         />
@@ -143,4 +149,4 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
 
 Radio.displayName = 'Radio';
 
-export { Radio, RadioProps };
+export { Radio, type RadioProps };

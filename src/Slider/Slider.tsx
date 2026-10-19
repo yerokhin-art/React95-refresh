@@ -1,5 +1,6 @@
 // helper functions and event handling basically copied from Material UI (https://github.com/mui-org/material-ui) Slider component
-import React, {
+import type React from 'react';
+import {
   forwardRef,
   useCallback,
   useEffect,
@@ -22,7 +23,7 @@ import useForkRef from '../common/hooks/useForkRef';
 import { useIsFocusVisible } from '../common/hooks/useIsFocusVisible';
 import { clamp, getSize, roundValueToStep } from '../common/utils';
 import { StyledScrollView } from '../ScrollView/ScrollView';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 export type SliderOnChangeHandler = (value: number) => void;
 
@@ -79,8 +80,8 @@ function trackFinger(
   return false;
 }
 
-function ownerDocument(node?: Element) {
-  return (node && node.ownerDocument) || document;
+function ownerDocument(node?: Element | null) {
+  return node?.ownerDocument || document;
 }
 
 function findClosest(values: number[], currentValue: number) {
@@ -117,7 +118,17 @@ type StyledSliderProps = Pick<
   isFocused?: boolean;
 };
 
-const Wrapper = styled.div<StyledSliderProps>`
+const sliderFilteredProps = new Set([
+  'hasMarks',
+  'isFocused',
+  'orientation',
+  'size',
+  'variant'
+]);
+
+const Wrapper = styled.div.withConfig({
+  shouldForwardProp: prop => !sliderFilteredProps.has(prop)
+})<StyledSliderProps>`
   display: inline-block;
   position: relative;
   touch-action: none;
@@ -180,10 +191,14 @@ const sharedGrooveStyles = () => css<StyledSliderProps>`
           width: 100%;
         `}
 `;
-const StyledGroove = styled(StyledScrollView)<StyledSliderProps>`
+const StyledGroove = styled(StyledScrollView).withConfig({
+  shouldForwardProp: prop => !sliderFilteredProps.has(prop)
+})<StyledSliderProps>`
   ${sharedGrooveStyles()}
 `;
-const StyledFlatGroove = styled(StyledScrollView)<StyledSliderProps>`
+const StyledFlatGroove = styled(StyledScrollView).withConfig({
+  shouldForwardProp: prop => !sliderFilteredProps.has(prop)
+})<StyledSliderProps>`
   ${sharedGrooveStyles()}
 
   border-left-color: ${({ theme }) => theme.flatLight};
@@ -197,7 +212,9 @@ const StyledFlatGroove = styled(StyledScrollView)<StyledSliderProps>`
     border-bottom-color: ${({ theme }) => theme.flatLight};
   }
 `;
-const Thumb = styled.span<StyledSliderProps>`
+const Thumb = styled.span.withConfig({
+  shouldForwardProp: prop => !sliderFilteredProps.has(prop)
+})<StyledSliderProps>`
   position: relative;
   ${({ orientation }) =>
     orientation === 'vertical'
@@ -228,15 +245,17 @@ const Thumb = styled.span<StyledSliderProps>`
           }
         `}
     ${({ $disabled, theme }) =>
-    $disabled &&
-    createHatchedBackground({
-      mainColor: theme.material,
-      secondaryColor: theme.borderLightest
-    })}
+      $disabled &&
+      createHatchedBackground({
+        mainColor: theme.material,
+        secondaryColor: theme.borderLightest
+      })}
 `;
 
 const tickHeight = 6;
-const Tick = styled.span<StyledSliderProps>`
+const Tick = styled.span.withConfig({
+  shouldForwardProp: prop => !sliderFilteredProps.has(prop)
+})<StyledSliderProps>`
   display: inline-block;
   position: absolute;
 
@@ -266,7 +285,9 @@ const Tick = styled.span<StyledSliderProps>`
       border-color: ${theme.materialTextDisabled};
     `}
 `;
-const Mark = styled.div<StyledSliderProps>`
+const Mark = styled.div.withConfig({
+  shouldForwardProp: prop => !sliderFilteredProps.has(prop)
+})<StyledSliderProps>`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -318,7 +339,7 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
       ref: focusVisibleRef
     } = useIsFocusVisible<HTMLDivElement>();
     const [focusVisible, setFocusVisible] = useState(false);
-    const sliderRef = useRef<HTMLDivElement>();
+    const sliderRef = useRef<HTMLDivElement | null>(null);
     const thumbRef = useRef<HTMLSpanElement | null>(null);
     const handleFocusRef = useForkRef(focusVisibleRef, sliderRef);
     const handleRef = useForkRef(ref, handleFocusRef);
@@ -338,7 +359,7 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
       }
     });
 
-    const touchId = useRef<number>();
+    const touchId = useRef<number | undefined>(undefined);
 
     const marks = useMemo(
       () =>
@@ -350,8 +371,8 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
               })
             )
           : Array.isArray(marksProp)
-          ? marksProp
-          : [],
+            ? marksProp
+            : [],
       [marksProp, max, min, step]
     );
 
@@ -424,15 +445,13 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
         }
         const rect = sliderRef.current.getBoundingClientRect();
 
-        let percent;
+        let percent: number;
         if (vertical) {
           percent = (rect.bottom - finger.y) / rect.height;
         } else {
           percent = (finger.x - rect.left) / rect.width;
         }
-        let newValue;
-
-        newValue = percentToValue(percent, min, max);
+        let newValue = percentToValue(percent, min, max);
         if (step) {
           newValue = roundValueToStep(newValue, step, min);
         } else {
@@ -563,26 +582,25 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
           type='hidden'
           value={valueDerived ?? 0}
         />
-        {marks &&
-          marks.map(m => (
-            <Tick
-              $disabled={disabled}
-              data-testid='tick'
-              key={(m.value / (max - min)) * 100}
-              orientation={orientation}
-              style={{
-                [vertical ? 'bottom' : 'left']: `${
-                  ((m.value - min) / (max - min)) * 100
-                }%`
-              }}
-            >
-              {m.label && (
-                <Mark aria-hidden data-testid='mark' orientation={orientation}>
-                  {m.label}
-                </Mark>
-              )}
-            </Tick>
-          ))}
+        {marks?.map(m => (
+          <Tick
+            $disabled={disabled}
+            data-testid='tick'
+            key={(m.value / (max - min)) * 100}
+            orientation={orientation}
+            style={{
+              [vertical ? 'bottom' : 'left']: `${
+                ((m.value - min) / (max - min)) * 100
+              }%`
+            }}
+          >
+            {m.label && (
+              <Mark aria-hidden data-testid='mark' orientation={orientation}>
+                {m.label}
+              </Mark>
+            )}
+          </Tick>
+        ))}
         <Groove orientation={orientation} variant={variant} />
         <Thumb
           $disabled={disabled}
@@ -612,4 +630,4 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
 
 Slider.displayName = 'Slider';
 
-export { Slider, SliderProps };
+export { Slider, type SliderProps };

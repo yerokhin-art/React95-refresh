@@ -1,22 +1,19 @@
 // Straight out copied from https://github.com/mui-org/material-ui 😂
 
+import type React from 'react';
 import { useMemo } from 'react';
 
-function setRef<T>(
-  ref: React.RefCallback<T> | React.MutableRefObject<T> | null,
-  value: T
-) {
+function setRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
   if (typeof ref === 'function') {
     ref(value);
   } else if (ref) {
-    // eslint-disable-next-line no-param-reassign
-    ref.current = value;
+    (ref as React.MutableRefObject<T | null>).current = value;
   }
 }
 
 export default function useForkRef<T>(
-  refA: React.RefCallback<T> | React.MutableRefObject<T> | null,
-  refB: React.RefCallback<T> | React.MutableRefObject<T> | null
+  refA: React.Ref<T> | undefined,
+  refB: React.Ref<T> | undefined
 ): React.RefCallback<T> | null {
   /**
    * This will create a new function if the ref props change and are defined.

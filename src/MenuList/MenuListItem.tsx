@@ -1,9 +1,10 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 
 import styled from 'styled-components';
 import { createDisabledTextStyles } from '../common';
 import { blockSizes } from '../common/system';
-import { CommonStyledProps, Sizes } from '../types';
+import type { CommonStyledProps, Sizes } from '../types';
 
 type MenuListItemProps = {
   disabled?: boolean;
@@ -13,7 +14,11 @@ type MenuListItemProps = {
 } & React.HTMLAttributes<HTMLLIElement> &
   CommonStyledProps;
 
-export const StyledMenuListItem = styled.li<{
+const menuListItemFilteredProps = new Set(['square', 'primary', 'size']);
+
+export const StyledMenuListItem = styled.li.withConfig({
+  shouldForwardProp: prop => !menuListItemFilteredProps.has(prop)
+})<{
   $disabled?: boolean;
   square?: boolean;
   primary?: boolean;
@@ -89,4 +94,4 @@ const MenuListItem = forwardRef<HTMLLIElement, MenuListItemProps>(
 
 MenuListItem.displayName = 'MenuListItem';
 
-export { MenuListItem, MenuListItemProps };
+export { MenuListItem, type MenuListItemProps };

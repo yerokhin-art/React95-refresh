@@ -1,6 +1,6 @@
 // TODO - implement styled-system
 
-import { Sizes } from '../types';
+import type { Sizes } from '../types';
 
 export const blockSizes: Record<Sizes, string> = {
   sm: '28px',

@@ -1,7 +1,7 @@
 import {
   clamp,
-  mapFromWindowsTheme,
   getDecimalPrecision,
+  mapFromWindowsTheme,
   roundValueToStep
 } from './index';
 

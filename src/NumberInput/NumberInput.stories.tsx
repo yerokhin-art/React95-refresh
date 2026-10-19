@@ -1,6 +1,5 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
-import { ScrollView, NumberInput } from 'react95';
+import type { Meta } from '@storybook/react-vite';
+import { NumberInput, ScrollView } from 'react95';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -24,7 +23,7 @@ export default {
   title: 'Controls/NumberInput',
   component: NumberInput,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof NumberInput>;
+} as Meta<typeof NumberInput>;
 
 export function Default() {
   return (

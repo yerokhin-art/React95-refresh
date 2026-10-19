@@ -1,8 +1,8 @@
-import React from 'react';
+import type React from 'react';
 import styled, { css } from 'styled-components';
 
 import { createHatchedBackground } from '../common';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type DigitProps = {
   pixelSize?: number;
@@ -10,13 +10,13 @@ type DigitProps = {
 } & React.HTMLAttributes<HTMLDivElement> &
   CommonStyledProps;
 
-const DigitWrapper = styled.div<Required<Pick<DigitProps, 'pixelSize'>>>`
+const DigitWrapper = styled.div<{ $pixelSize: number }>`
   position: relative;
   --react95-digit-primary-color: #ff0102;
   --react95-digit-secondary-color: #740201;
   --react95-digit-bg-color: #000000;
 
-  ${({ pixelSize }) => css`
+  ${({ $pixelSize: pixelSize }) => css`
     width: ${11 * pixelSize}px;
     height: ${21 * pixelSize}px;
     margin: ${pixelSize}px;
@@ -174,11 +174,11 @@ const digitActiveSegments = [
 ];
 
 function Digit({ digit = 0, pixelSize = 2, ...otherProps }: DigitProps) {
-  const segmentClasses = digitActiveSegments[Number(digit)].map((isActive, i) =>
-    isActive ? `${segments[i]} active` : segments[i]
+  const segmentClasses = digitActiveSegments[Number(digit)].map(
+    (isActive, i) => (isActive ? `${segments[i]} active` : segments[i])
   );
   return (
-    <DigitWrapper pixelSize={pixelSize} {...otherProps}>
+    <DigitWrapper $pixelSize={pixelSize} {...otherProps}>
       {segmentClasses.map((className, i) => (
         <span className={className} key={i} />
       ))}
@@ -186,4 +186,4 @@ function Digit({ digit = 0, pixelSize = 2, ...otherProps }: DigitProps) {
   );
 }
 
-export { Digit, DigitProps };
+export { Digit, type DigitProps };

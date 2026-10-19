@@ -1,8 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
-import styled from 'styled-components';
-
+import type { Meta } from '@storybook/react-vite';
 import { MenuList, MenuListItem, Separator } from 'react95';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   padding: 5rem;
@@ -13,7 +11,7 @@ export default {
   title: 'Layout/Separator',
   component: Separator,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Separator>;
+} as Meta<typeof Separator>;
 
 export function Default() {
   return (

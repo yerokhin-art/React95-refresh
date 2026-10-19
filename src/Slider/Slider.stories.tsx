@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
+import type { Meta } from '@storybook/react-vite';
 import React from 'react';
-import { ScrollView, Slider, SliderOnChangeHandler } from 'react95';
+import { ScrollView, Slider, type SliderOnChangeHandler } from 'react95';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -38,7 +38,7 @@ export default {
   title: 'Controls/Slider',
   component: Slider,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Slider>;
+} as Meta<typeof Slider>;
 
 export function Default() {
   const [state, setState] = React.useState(0);

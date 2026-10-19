@@ -1,4 +1,4 @@
-import { Separator, SeparatorProps } from '../Separator/Separator';
+import { Separator, type SeparatorProps } from '../Separator/Separator';
 
 /** @deprecated Use `SeparatorProps` */
 export type DividerProps = SeparatorProps;

@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import {
   createBorderStyles,
@@ -10,7 +11,7 @@ import {
 } from '../common';
 import { blockSizes } from '../common/system';
 import { noOp } from '../common/utils';
-import { CommonStyledProps, Sizes } from '../types';
+import type { CommonStyledProps, CommonThemeProps, Sizes } from '../types';
 
 type ButtonProps = {
   active?: boolean;
@@ -22,7 +23,7 @@ type ButtonProps = {
   primary?: boolean;
   size?: Sizes;
   square?: boolean;
-  type?: string;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 } & (
   | {
       variant?: 'default' | 'raised' | 'flat' | 'thin';
@@ -47,7 +48,8 @@ type StyledButtonProps = Pick<
   | 'size'
   | 'square'
   | 'variant'
->;
+> &
+  CommonThemeProps;
 
 const commonButtonStyles = css<StyledButtonProps>`
   position: relative;
@@ -79,36 +81,51 @@ const commonButtonStyles = css<StyledButtonProps>`
   font-family: inherit;
 `;
 
-export const StyledButton = styled.button<StyledButtonProps>`
+const buttonFilteredProps = new Set([
+  'active',
+  'fullWidth',
+  'primary',
+  'size',
+  'square',
+  'variant'
+]);
+
+export const StyledButton = styled.button.withConfig({
+  shouldForwardProp: prop => !buttonFilteredProps.has(prop)
+})<StyledButtonProps>`
   ${({ active, disabled, primary, theme, variant }) =>
     variant === 'flat'
       ? css`
           ${createFlatBoxStyles()}
-          ${primary
-            ? `
+          ${
+            primary
+              ? `
           border: 2px solid ${theme.checkmark};
             outline: 2px solid ${theme.flatDark};
             outline-offset: -4px;
           `
-            : `
+              : `
           border: 2px solid ${theme.flatDark};
             outline: 2px solid transparent;
             outline-offset: -4px;
-          `}
+          `
+          }
           &:focus:after, &:active:after {
             ${!active && !disabled && focusOutline}
             outline-offset: -4px;
           }
         `
       : variant === 'menu' || variant === 'thin'
-      ? css`
+        ? css`
           ${createBoxStyles()};
           border: 2px solid transparent;
           &:hover,
           &:focus {
-            ${!disabled &&
-            !active &&
-            createBorderStyles({ style: 'buttonThin' })}
+            ${
+              !disabled &&
+              !active &&
+              createBorderStyles({ style: 'buttonThin' })
+            }
           }
           &:active {
             ${!disabled && createBorderStyles({ style: 'buttonThinPressed' })}
@@ -116,51 +133,59 @@ export const StyledButton = styled.button<StyledButtonProps>`
           ${active && createBorderStyles({ style: 'buttonThinPressed' })}
           ${disabled && createDisabledTextStyles()}
         `
-      : css`
+        : css`
           ${createBoxStyles()};
           border: none;
           ${disabled && createDisabledTextStyles()}
-          ${active
-            ? createHatchedBackground({
-                mainColor: theme.material,
-                secondaryColor: theme.borderLightest
-              })
-            : ''}
+          ${
+            active
+              ? createHatchedBackground({
+                  mainColor: theme.material,
+                  secondaryColor: theme.borderLightest
+                })
+              : ''
+          }
           &:before {
             box-sizing: border-box;
             content: '';
             position: absolute;
-            ${primary
-              ? css`
+            ${
+              primary
+                ? css`
                   left: 2px;
                   top: 2px;
                   width: calc(100% - 4px);
                   height: calc(100% - 4px);
                   outline: 2px solid ${theme.borderDarkest};
                 `
-              : css`
+                : css`
                   left: 0;
                   top: 0;
                   width: 100%;
                   height: 100%;
-                `}
+                `
+            }
 
-            ${active
-              ? createBorderStyles({
-                  style: variant === 'raised' ? 'window' : 'button',
-                  invert: true
-                })
-              : createBorderStyles({
-                  style: variant === 'raised' ? 'window' : 'button',
-                  invert: false
-                })}
+            ${
+              active
+                ? createBorderStyles({
+                    style: variant === 'raised' ? 'window' : 'button',
+                    invert: true
+                  })
+                : createBorderStyles({
+                    style: variant === 'raised' ? 'window' : 'button',
+                    invert: false
+                  })
+            }
           }
           &:active:before {
-            ${!disabled &&
-            createBorderStyles({
-              style: variant === 'raised' ? 'window' : 'button',
-              invert: true
-            })}
+            ${
+              !disabled &&
+              createBorderStyles({
+                style: variant === 'raised' ? 'window' : 'button',
+                invert: true
+              })
+            }
           }
           &:focus:after,
           &:active:after {
@@ -217,4 +242,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = 'Button';
 
-export { Button, ButtonProps };
+export { Button, type ButtonProps };

@@ -1,5 +1,4 @@
 import { fireEvent, render } from '@testing-library/react';
-import React from 'react';
 
 import { renderWithTheme, theme } from '../../test/utils';
 import { blockSizes } from '../common/system';
@@ -27,7 +26,7 @@ describe('<Button />', () => {
   });
 
   it('should handle click properly', () => {
-    const onButtonClick = jest.fn();
+    const onButtonClick = vi.fn();
     const { getByRole } = render(
       <Button {...defaultProps} onClick={onButtonClick} />
     );
@@ -110,7 +109,7 @@ describe('<Button />', () => {
       expect(button).toHaveAttribute('disabled');
     });
     it('should not fire click when disabled', () => {
-      const onButtonClick = jest.fn();
+      const onButtonClick = vi.fn();
       const { getByRole } = render(<Button {...defaultProps} disabled />);
       const button = getByRole('button');
 

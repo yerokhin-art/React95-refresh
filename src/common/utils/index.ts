@@ -1,4 +1,4 @@
-import { WindowsTheme } from '../../types';
+import type { WindowsTheme } from '../../types';
 
 export const noOp = () => {};
 

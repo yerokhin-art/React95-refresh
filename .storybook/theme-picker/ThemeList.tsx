@@ -1,9 +1,9 @@
-import { useAddonState } from '@storybook/api';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
+import { useGlobals } from 'storybook/manager-api';
 import styled from 'styled-components';
 
 import themes from '../../src/common/themes';
-import { Theme } from '../../src/types';
+import type { Theme } from '../../src/types';
 import { THEMES_ID } from './constants';
 import { ThemeButton } from './ThemeButton';
 
@@ -49,17 +49,18 @@ const Wrapper = styled.div<{ theme: Theme }>`
 `;
 
 export function ThemeList({ active }: ThemesProps) {
-  const [themeName, setThemeName] = useAddonState(THEMES_ID, 'original');
+  const [globals, updateGlobals] = useGlobals();
+  const themeName = (globals.theme as string) || 'original';
 
   const handleChoose = useCallback(
     (newThemeName: string) => {
-      setThemeName(newThemeName);
+      updateGlobals({ theme: newThemeName });
     },
-    [setThemeName]
+    [updateGlobals]
   );
 
   if (!active) {
-    return <></>;
+    return null;
   }
 
   return (

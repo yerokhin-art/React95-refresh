@@ -1,5 +1,5 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import { useState } from 'react';
 import { Button, Counter, Frame } from 'react95';
 import styled from 'styled-components';
 
@@ -23,7 +23,7 @@ export default {
   title: 'Other/Counter',
   component: Counter,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Counter>;
+} as Meta<typeof Counter>;
 
 export function Default() {
   const [count, setCount] = useState(13);

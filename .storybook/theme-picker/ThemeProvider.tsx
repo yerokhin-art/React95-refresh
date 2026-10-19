@@ -1,13 +1,11 @@
-import { useAddonState } from '@storybook/client-api';
-import { DecoratorFn } from '@storybook/react';
-import React from 'react';
+import type { Decorator } from '@storybook/react-vite';
 import { ThemeProvider } from 'styled-components';
 
 import themes from '../../src/common/themes/index';
-import { THEMES_ID } from './constants';
 
-export const withThemesProvider: DecoratorFn = story => {
-  const [themeName] = useAddonState(THEMES_ID, 'original');
+export const withThemesProvider: Decorator = (story, context) => {
+  const themeName =
+    (context.globals.theme as keyof typeof themes) || 'original';
 
   return (
     <ThemeProvider theme={themes[themeName] ?? themes.original}>

@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 import { getSize } from '../common/utils';
-import { Orientation } from '../types';
+import type { Orientation } from '../types';
 
 type SeparatorProps = {
   size?: string | number;
   orientation?: Orientation;
 };
 
-const Separator = styled.div<SeparatorProps>`
+const separatorFilteredProps = new Set(['size', 'orientation']);
+
+const Separator = styled.div.withConfig({
+  shouldForwardProp: prop => !separatorFilteredProps.has(prop)
+})<SeparatorProps>`
   ${({ orientation, theme, size = '100%' }) =>
     orientation === 'vertical'
       ? `
@@ -26,4 +30,4 @@ const Separator = styled.div<SeparatorProps>`
 
 Separator.displayName = 'Separator';
 
-export { Separator, SeparatorProps };
+export { Separator, type SeparatorProps };

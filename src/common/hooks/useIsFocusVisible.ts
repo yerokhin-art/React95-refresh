@@ -2,7 +2,6 @@
 // based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
 
 import { useCallback } from 'react';
-import { findDOMNode } from 'react-dom';
 
 let hadKeyboardEvent = true;
 let hadFocusVisibleRecently = false;
@@ -110,7 +109,7 @@ function isFocusVisible(event: React.FocusEvent) {
   const { target } = event;
   try {
     return target.matches(':focus-visible');
-  } catch (error) {
+  } catch (_error) {
     // browsers not implementing :focus-visible will throw a SyntaxError
     // we use our own heuristic for those browsers
     // rethrow might be better if it's not the expected error but do we really
@@ -138,9 +137,7 @@ function handleBlurVisible() {
 }
 
 export function useIsFocusVisible<T extends Element = HTMLElement>() {
-  const ref = useCallback((instance: T) => {
-    // eslint-disable-next-line react/no-find-dom-node
-    const node = findDOMNode(instance);
+  const ref = useCallback((node: T | null) => {
     if (node != null) {
       prepare(node.ownerDocument);
     }

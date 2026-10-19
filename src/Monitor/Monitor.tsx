@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 import { StyledScrollView } from '../ScrollView/ScrollView';
@@ -56,9 +57,7 @@ const MonitorBody = styled.div`
   }
 `;
 
-const Background = styled(StyledScrollView).attrs(() => ({
-  'data-testid': 'background'
-}))`
+const Background = styled(StyledScrollView)`
   width: 100%;
   height: 100%;
 `;
@@ -112,7 +111,9 @@ const Monitor = forwardRef<HTMLDivElement, MonitorProps>(
       <Wrapper ref={ref} {...otherProps}>
         <Inner>
           <MonitorBody>
-            <Background style={backgroundStyles}>{children}</Background>
+            <Background data-testid='background' style={backgroundStyles}>
+              {children}
+            </Background>
           </MonitorBody>
           <Stand />
         </Inner>
@@ -123,4 +124,4 @@ const Monitor = forwardRef<HTMLDivElement, MonitorProps>(
 
 Monitor.displayName = 'Monitor';
 
-export { Monitor, MonitorProps };
+export { Monitor, type MonitorProps };

@@ -2,16 +2,16 @@ import styled, { css } from 'styled-components';
 
 import { StyledButton as Button } from '../Button/Button';
 import {
+  shadow as commonShadow,
   createDisabledTextStyles,
   createFlatBoxStyles,
-  createScrollbars,
-  shadow as commonShadow
+  createScrollbars
 } from '../common';
 import { blockSizes } from '../common/system';
 import { StyledScrollView } from '../ScrollView/ScrollView';
-import { CommonThemeProps } from '../types';
+import type { CommonThemeProps } from '../types';
 
-import { SelectVariants } from './Select.types';
+import type { SelectVariants } from './Select.types';
 
 type CommonSelectStyleProps = {
   $disabled?: boolean;
@@ -107,9 +107,15 @@ export const StyledNativeSelect = styled.select`
   }
 `;
 
-export const StyledDropdownButton = styled(Button).attrs(() => ({
-  'aria-hidden': 'true'
-}))<Omit<CommonSelectStyleProps, 'variant'>>`
+const selectFilteredProps = new Set(['native', 'variant', 'active']);
+
+export const StyledDropdownButton = styled(Button)
+  .withConfig({
+    shouldForwardProp: prop => !selectFilteredProps.has(prop)
+  })
+  .attrs(() => ({
+    'aria-hidden': 'true'
+  }))<Omit<CommonSelectStyleProps, 'variant'>>`
   width: 30px;
   padding: 0;
   flex-shrink: 0;
@@ -124,20 +130,22 @@ export const StyledDropdownButton = styled(Button).attrs(() => ({
         `}
   ${({ native = false, variant = 'default' }) =>
     native &&
-    (variant === 'flat'
-      ? `
+    (
+      variant === 'flat'
+        ? `
       position: absolute;
       right: 0;
       height: 100%;
       `
-      : `
+        : `
     position: absolute;
     top: 2px;
     right: 2px;
     height: calc(100% - 4px);
-    `)}
+    `
+    )}
     pointer-events: ${({ $disabled = false, native = false }) =>
-    $disabled || native ? 'none' : 'auto'}
+      $disabled || native ? 'none' : 'auto'}
 `;
 
 export const StyledDropdownIcon = styled.span<CommonSelectStyleProps>`
@@ -164,7 +172,9 @@ export const StyledDropdownIcon = styled.span<CommonSelectStyleProps>`
   }
 `;
 
-export const StyledDropdownMenu = styled.ul<CommonSelectStyleProps>`
+export const StyledDropdownMenu = styled.ul.withConfig({
+  shouldForwardProp: prop => !selectFilteredProps.has(prop)
+})<CommonSelectStyleProps>`
   box-sizing: border-box;
 
   font-size: 1rem;
@@ -193,7 +203,9 @@ export const StyledDropdownMenu = styled.ul<CommonSelectStyleProps>`
   ${({ variant = 'default' }) => createScrollbars(variant)}
 `;
 
-export const StyledDropdownMenuItem = styled.li<{ active: boolean }>`
+export const StyledDropdownMenuItem = styled.li.withConfig({
+  shouldForwardProp: prop => !selectFilteredProps.has(prop)
+})<{ active: boolean }>`
   box-sizing: border-box;
 
   width: 100%;

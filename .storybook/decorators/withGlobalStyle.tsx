@@ -1,5 +1,4 @@
-import { DecoratorFn } from '@storybook/react';
-import React from 'react';
+import type { Decorator } from '@storybook/react-vite';
 import { createGlobalStyle } from 'styled-components';
 
 import ms_sans_serif from '../../src/assets/fonts/dist/ms_sans_serif.woff2';
@@ -20,10 +19,10 @@ const GlobalStyle = createGlobalStyle`
     font-weight: bold;
     font-style: normal
   }
-  html, body, #root {
+  html, body, #root, #storybook-root {
    height: 100%;
   }
-  #root > * {
+  #root > *, #storybook-root > * {
     height: 100%;
     box-sizing: border-box;
   }
@@ -32,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const withGlobalStyle: DecoratorFn = story => (
+export const withGlobalStyle: Decorator = story => (
   <>
     <GlobalStyle />
     {story()}

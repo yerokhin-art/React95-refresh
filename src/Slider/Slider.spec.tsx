@@ -1,6 +1,5 @@
 // Pretty much straight out copied from https://github.com/mui-org/material-ui 😂
 import { fireEvent } from '@testing-library/react';
-import React from 'react';
 
 import { renderWithTheme, Touch } from '../../test/utils';
 import { Slider } from './Slider';
@@ -15,22 +14,20 @@ function createTouches(
 
 describe('<Slider />', () => {
   beforeAll(() => {
-    jest
-      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
-      .mockImplementation(
-        () =>
-          ({
-            width: 100,
-            height: 20,
-            bottom: 20,
-            left: 0
-          } as DOMRect)
-      );
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
+      () =>
+        ({
+          width: 100,
+          height: 20,
+          bottom: 20,
+          left: 0
+        }) as DOMRect
+    );
   });
 
   it('should call handlers', () => {
-    const handleChange = jest.fn();
-    const handleChangeCommitted = jest.fn();
+    const handleChange = vi.fn();
+    const handleChangeCommitted = vi.fn();
 
     const { container, getByRole } = renderWithTheme(
       <Slider
@@ -57,8 +54,8 @@ describe('<Slider />', () => {
   });
 
   it('should only listen to changes from the same touchpoint', () => {
-    const handleChange = jest.fn();
-    const handleChangeCommitted = jest.fn();
+    const handleChange = vi.fn();
+    const handleChangeCommitted = vi.fn();
     const { container } = renderWithTheme(
       <Slider
         onChange={handleChange}
@@ -98,7 +95,7 @@ describe('<Slider />', () => {
     );
   });
   it('should forward mouseDown', () => {
-    const handleMouseDown = jest.fn();
+    const handleMouseDown = vi.fn();
     const { container } = renderWithTheme(
       <Slider onMouseDown={handleMouseDown} defaultValue={0} />
     );
@@ -309,7 +306,7 @@ describe('<Slider />', () => {
     });
 
     it('should report the right position', () => {
-      const handleChange = jest.fn();
+      const handleChange = vi.fn();
       const { container } = renderWithTheme(
         <Slider
           orientation='vertical'
@@ -321,17 +318,18 @@ describe('<Slider />', () => {
       const slider = container.firstElementChild as HTMLElement;
 
       // mocking containers size
-      jest
-        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
-        .mockImplementation(
-          () =>
-            ({
-              width: 20,
-              height: 100,
-              bottom: 100,
-              left: 0
-            } as DOMRect)
-        );
+      vi.spyOn(
+        HTMLElement.prototype,
+        'getBoundingClientRect'
+      ).mockImplementation(
+        () =>
+          ({
+            width: 20,
+            height: 100,
+            bottom: 100,
+            left: 0
+          }) as DOMRect
+      );
 
       fireEvent.touchStart(
         slider,

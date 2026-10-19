@@ -1,11 +1,12 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { StyledButton } from '../Button/Button';
 import { focusOutline } from '../common';
 import useControlledOrUncontrolled from '../common/hooks/useControlledOrUncontrolled';
 import { noOp } from '../common/utils';
 import { Separator } from '../Separator/Separator';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type ColorInputProps = {
   defaultValue?: string;
@@ -167,4 +168,4 @@ const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
 
 ColorInput.displayName = 'ColorInput';
 
-export { ColorInput, ColorInputProps };
+export { ColorInput, type ColorInputProps };

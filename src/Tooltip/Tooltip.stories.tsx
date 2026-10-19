@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { Button, Tooltip } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +11,7 @@ export default {
   title: 'Controls/Tooltip',
   component: Tooltip,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Tooltip>;
+} as Meta<typeof Tooltip>;
 
 export function Default() {
   return (

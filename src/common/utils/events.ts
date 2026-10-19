@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 export const focusEventTypes = ['blur', 'focus'];
 
@@ -7,6 +7,7 @@ export const keyboardEventTypes = ['keydown', 'keypress', 'keyup'];
 export const mouseEventTypes = [
   'click',
   'contextmenu',
+  'dblclick',
   'doubleclick',
   'drag',
   'dragend',

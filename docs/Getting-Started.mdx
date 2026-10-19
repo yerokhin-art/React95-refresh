@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs';
+import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title='Docs/Getting Started' />
 
@@ -11,11 +11,11 @@ React95 is available as an [npm package](https://www.npmjs.com/package/react95).
 To install and save your `package.json` dependencies, run:
 
 ```sh
-# yarn
-yarn add react95 styled-components
+# pnpm
+pnpm add react95 styled-components
 
 # npm
-npm install -S react95 styled-components
+npm install react95 styled-components
 ```
 
 In order to have `react95` working properly, you'll also need
@@ -28,12 +28,11 @@ Apply style reset, wrap your app content with ThemeProvider with theme of your
 choice... and you are ready to go! 🚀
 
 ```jsx
-import React from 'react';
 import { MenuList, MenuListItem, Separator, styleReset } from 'react95';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 /* Pick a theme of your choice */
-import original from 'react95/dist/themes/original';
+import original from 'react95/themes/original';
 
 /* Original Windows95 font (optional) */
 import ms_sans_serif from 'react95/dist/fonts/ms_sans_serif.woff2';

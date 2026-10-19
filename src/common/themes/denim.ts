@@ -2,7 +2,7 @@
  * https://www.deviantart.com/tpenguinltg/art/Denim-870494744
  */
 
-import { Theme } from './types';
+import type { Theme } from './types';
 
 export default {
   name: 'denim',

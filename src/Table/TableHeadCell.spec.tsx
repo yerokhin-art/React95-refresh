@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 import { renderWithTheme } from '../../test/utils';
 
@@ -48,7 +48,7 @@ describe('<TableHeadCell />', () => {
 
   describe('prop: disabled', () => {
     it('should disable th element', () => {
-      const handleChange = jest.fn();
+      const handleChange = vi.fn();
 
       const { th } = mountInTable(
         <TableHeadCell disabled onChange={handleChange} />

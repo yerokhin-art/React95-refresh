@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { fireEvent } from '@testing-library/react';
 import { renderWithTheme } from '../../test/utils';
 import { TreeView } from './TreeView';
 
@@ -62,20 +61,20 @@ const categories = [
 describe('<TreeView />', () => {
   describe('prop: onNodeSelect', () => {
     it('should call onNodeSelect when uncontrolled', () => {
-      const onNodeSelect = jest.fn((_, id) => id);
+      const onNodeSelect = vi.fn((_: unknown, id: string) => id);
 
       const { getByText } = renderWithTheme(
         <TreeView tree={categories} onNodeSelect={onNodeSelect} />
       );
 
-      getByText('Beverages').click();
+      fireEvent.click(getByText('Beverages'));
 
       expect(onNodeSelect).toHaveBeenCalledTimes(1);
       expect(onNodeSelect.mock.results[0].value).toBe('beverages');
     });
 
     it('should call onNodeSelect when controlled', () => {
-      const onNodeSelect = jest.fn((_, id) => id);
+      const onNodeSelect = vi.fn((_: unknown, id: string) => id);
 
       const { getByText } = renderWithTheme(
         <TreeView
@@ -85,7 +84,7 @@ describe('<TreeView />', () => {
         />
       );
 
-      getByText('Beverages').click();
+      fireEvent.click(getByText('Beverages'));
 
       expect(onNodeSelect).toHaveBeenCalledTimes(1);
       expect(onNodeSelect.mock.results[0].value).toBe('beverages');
@@ -94,20 +93,20 @@ describe('<TreeView />', () => {
 
   describe('prop: onNodeToggle', () => {
     it('should call onNodeToggle when uncontrolled', () => {
-      const onNodeToggle = jest.fn((_, ids) => ids);
+      const onNodeToggle = vi.fn((_: unknown, ids: string[]) => ids);
 
       const { getByText } = renderWithTheme(
         <TreeView tree={categories} onNodeToggle={onNodeToggle} />
       );
 
-      getByText('Beverages').click();
+      fireEvent.click(getByText('Beverages'));
 
       expect(onNodeToggle).toHaveBeenCalledTimes(1);
       expect(onNodeToggle.mock.results[0].value).toStrictEqual(['beverages']);
     });
 
     it('should call onNodeToggle when controlled', () => {
-      const onNodeToggle = jest.fn((_, ids) => ids);
+      const onNodeToggle = vi.fn((_: unknown, ids: string[]) => ids);
 
       const { getByText } = renderWithTheme(
         <TreeView
@@ -117,7 +116,7 @@ describe('<TreeView />', () => {
         />
       );
 
-      getByText('Beverages').click();
+      fireEvent.click(getByText('Beverages'));
 
       expect(onNodeToggle).toHaveBeenCalledTimes(1);
       expect(onNodeToggle.mock.results[0].value).toStrictEqual([
@@ -129,8 +128,8 @@ describe('<TreeView />', () => {
 
   describe('prop: disabled', () => {
     it('should disable the whole tree', () => {
-      const onNodeSelect = jest.fn((_, id) => id);
-      const onNodeToggle = jest.fn((_, ids) => ids);
+      const onNodeSelect = vi.fn((_: unknown, id: string) => id);
+      const onNodeToggle = vi.fn((_: unknown, ids: string[]) => ids);
 
       const { getByText } = renderWithTheme(
         <TreeView
@@ -141,15 +140,15 @@ describe('<TreeView />', () => {
         />
       );
 
-      getByText('Beverages').click();
+      fireEvent.click(getByText('Beverages'));
 
       expect(onNodeSelect).not.toHaveBeenCalled();
       expect(onNodeToggle).not.toHaveBeenCalled();
     });
 
     it('should disable a tree item', () => {
-      const onNodeSelect = jest.fn((_, id) => id);
-      const onNodeToggle = jest.fn((_, ids) => ids);
+      const onNodeSelect = vi.fn((_: unknown, id: string) => id);
+      const onNodeToggle = vi.fn((_: unknown, ids: string[]) => ids);
       const modifiedTree = categories.map((item, index) =>
         index !== 0 ? item : { ...item, disabled: true }
       );
@@ -162,12 +161,12 @@ describe('<TreeView />', () => {
         />
       );
 
-      getByText('Beverages').click();
+      fireEvent.click(getByText('Beverages'));
 
       expect(onNodeSelect).not.toHaveBeenCalled();
       expect(onNodeToggle).not.toHaveBeenCalled();
 
-      getByText('Dairy').click();
+      fireEvent.click(getByText('Dairy'));
 
       expect(onNodeSelect).toHaveBeenCalledTimes(1);
       expect(onNodeToggle).toHaveBeenCalledTimes(1);

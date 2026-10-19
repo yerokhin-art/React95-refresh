@@ -1,5 +1,5 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useEffect, useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import { useEffect, useState } from 'react';
 import { ProgressBar } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +12,7 @@ export default {
   title: 'Controls/ProgressBar',
   component: ProgressBar,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof ProgressBar>;
+} as Meta<typeof ProgressBar>;
 
 export function Default() {
   const [percent, setPercent] = useState(0);

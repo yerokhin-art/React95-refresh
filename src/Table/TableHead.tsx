@@ -1,6 +1,7 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type TableHeadProps = {
   children?: React.ReactNode;
@@ -22,4 +23,4 @@ const TableHead = forwardRef<HTMLTableSectionElement, TableHeadProps>(
 
 TableHead.displayName = 'TableHead';
 
-export { TableHead, TableHeadProps };
+export { TableHead, type TableHeadProps };

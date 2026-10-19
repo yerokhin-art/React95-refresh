@@ -2,7 +2,7 @@
  * https://www.deviantart.com/tpenguinltg/art/PowerShell-646065752
  */
 
-import { Theme } from './types';
+import type { Theme } from './types';
 
 export default {
   name: 'powerShell',

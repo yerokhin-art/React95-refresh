@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { Handle, MenuList, MenuListItem, Separator } from 'react95';
 import styled from 'styled-components';
 
@@ -18,7 +17,7 @@ export default {
   component: MenuList,
   subcomponents: { MenuListItem },
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof MenuList>;
+} as Meta<typeof MenuList>;
 
 export function Default() {
   return (
@@ -29,7 +28,7 @@ export function Default() {
           as='a'
           // TODO: Come up with a more elegant way to allow props when `as` is used
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+          // @ts-expect-error
           href='https://expensive.toys'
           target='_blank'
         >

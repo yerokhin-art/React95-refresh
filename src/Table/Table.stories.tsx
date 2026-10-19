@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import {
   Table,
   TableBody,
@@ -30,7 +29,7 @@ export default {
     TableDataCell
   },
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Table>;
+} as Meta<typeof Table>;
 
 export function Default() {
   return (

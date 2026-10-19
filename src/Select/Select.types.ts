@@ -1,5 +1,5 @@
-import React from 'react';
-import { HTMLDataAttributes } from '../types';
+import type React from 'react';
+import type { HTMLDataAttributes } from '../types';
 
 type SelectChangeEventTargetValue<T> = { value: T; name: string | undefined };
 

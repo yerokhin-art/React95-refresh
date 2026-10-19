@@ -1,6 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useCallback, useState } from 'react';
-import { GroupBox, TreeLeaf, TreeView } from 'react95';
+import type { Meta } from '@storybook/react-vite';
+import { useCallback, useState } from 'react';
+import { GroupBox, type TreeLeaf, TreeView } from 'react95';
 import styled from 'styled-components';
 import { Button } from '../Button/Button';
 
@@ -26,7 +26,7 @@ export default {
   title: 'Controls/TreeView',
   component: TreeView,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof TreeView>;
+} as Meta<typeof TreeView>;
 
 const categories = [
   {

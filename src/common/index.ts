@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { Color, CommonThemeProps, Theme } from '../types';
+import type { Color, CommonThemeProps, Theme } from '../types';
 
 export const shadow = '4px 4px 10px 0 rgba(0, 0, 0, 0.35)';
 export const insetShadow = 'inset 2px 2px 3px rgba(0,0,0,0.2)';
@@ -160,7 +160,10 @@ export const createInnerBorderWithShadow = ({
 export const createBorderStyles = ({
   invert = false,
   style = 'button'
-}: { invert?: boolean; style?: BorderStyles } = {}) => {
+}: {
+  invert?: boolean;
+  style?: BorderStyles;
+} = {}) => {
   const borders = {
     topLeftOuter: invert ? 'bottomRightOuter' : 'topLeftOuter',
     topLeftInner: invert ? 'bottomRightInner' : 'topLeftInner',
@@ -178,12 +181,12 @@ export const createBorderStyles = ({
       theme[borderStyles[style][borders.bottomRightOuter]]};
     border-bottom-color: ${({ theme }) =>
       theme[borderStyles[style][borders.bottomRightOuter]]};
-    box-shadow: ${({ theme, shadow: hasShadow }) =>
+    box-shadow: ${({ theme, shadow: hasShadow, $shadow }) =>
       createInnerBorderWithShadow({
         theme,
         topLeftInner: borderStyles[style][borders.topLeftInner],
         bottomRightInner: borderStyles[style][borders.bottomRightInner],
-        hasShadow
+        hasShadow: $shadow ?? hasShadow
       })};
   `;
 };
@@ -226,9 +229,11 @@ export const createScrollbars = (variant = 'default') => css`
   }
   ::-webkit-scrollbar-thumb {
     ${createBoxStyles()}
-    ${variant === 'flat'
-      ? createFlatBoxStyles()
-      : createBorderStyles({ style: 'window' })}
+    ${
+      variant === 'flat'
+        ? createFlatBoxStyles()
+        : createBorderStyles({ style: 'window' })
+    }
       outline-offset: -2px;
   }
 
@@ -237,9 +242,11 @@ export const createScrollbars = (variant = 'default') => css`
   }
   ::-webkit-scrollbar-button {
     ${createBoxStyles()}
-    ${variant === 'flat'
-      ? createFlatBoxStyles()
-      : createBorderStyles({ style: 'window' })}
+    ${
+      variant === 'flat'
+        ? createFlatBoxStyles()
+        : createBorderStyles({ style: 'window' })
+    }
       display: block;
     outline-offset: -2px;
     height: 26px;
@@ -251,9 +258,11 @@ export const createScrollbars = (variant = 'default') => css`
   ::-webkit-scrollbar-button:active,
   ::-webkit-scrollbar-button:active {
     background-position: 0 1px;
-    ${variant === 'default'
-      ? createBorderStyles({ style: 'window', invert: true })
-      : ''}
+    ${
+      variant === 'default'
+        ? createBorderStyles({ style: 'window', invert: true })
+        : ''
+    }
   }
 
   ::-webkit-scrollbar-button:horizontal:increment:start,

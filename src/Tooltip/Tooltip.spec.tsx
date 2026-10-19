@@ -1,7 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
-import React from 'react';
 
-import { Tooltip, TooltipProps } from './Tooltip';
+import { Tooltip, type TooltipProps } from './Tooltip';
 
 const getProps = (
   props: Partial<TooltipProps> = {}
@@ -11,12 +10,12 @@ const getProps = (
   disableMouseListener: props.disableMouseListener,
   enterDelay: props.enterDelay !== undefined ? props.enterDelay : 0,
   leaveDelay: props.leaveDelay !== undefined ? props.leaveDelay : 0,
-  onBlur: jest.fn(),
-  onClose: jest.fn(),
-  onFocus: jest.fn(),
-  onMouseEnter: jest.fn(),
-  onMouseLeave: jest.fn(),
-  onOpen: jest.fn(),
+  onBlur: vi.fn(),
+  onClose: vi.fn(),
+  onFocus: vi.fn(),
+  onMouseEnter: vi.fn(),
+  onMouseLeave: vi.fn(),
+  onOpen: vi.fn(),
   style: props.style,
   text: 'I am the tooltip'
 });
@@ -73,13 +72,13 @@ describe('<Tooltip />', () => {
 
   describe('transition delays', () => {
     beforeEach(() => {
-      jest.useFakeTimers({
-        legacyFakeTimers: true
-      });
+      vi.useFakeTimers();
+      vi.spyOn(window, 'setTimeout');
     });
 
     afterEach(() => {
-      jest.useRealTimers();
+      vi.restoreAllMocks();
+      vi.useRealTimers();
     });
 
     it('should respect enterDelay', async () => {

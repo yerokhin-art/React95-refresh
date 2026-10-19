@@ -2,7 +2,7 @@
  * https://www.deviantart.com/tpenguinltg/art/wmii-683233676
  */
 
-import { Theme } from './types';
+import type { Theme } from './types';
 
 export default {
   name: 'wmii',

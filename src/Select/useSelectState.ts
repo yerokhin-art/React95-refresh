@@ -1,16 +1,11 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { KEYBOARD_KEY_CODES } from '../common/constants';
 import useControlledOrUncontrolled from '../common/hooks/useControlledOrUncontrolled';
 import { clamp } from '../common/utils';
 
-import { SelectOption, SelectInnerProps } from './Select.types';
+import type { SelectInnerProps, SelectOption } from './Select.types';
 
 const TYPING_RESET_DELAY = 1000;
 
@@ -45,12 +40,14 @@ export const useSelectState = <T>({
   const activeIndex = useRef(0);
 
   // Buffer to focus option after it is rendered and the reference becomes known
-  const focusIndexWhenSet = useRef<number>();
+  const focusIndexWhenSet = useRef<number | undefined>(undefined);
 
   // Typing state references so callbacks are not reset on every change
   const typingMode = useRef<'search' | 'cycleFirstLetter'>('search');
   const typedString = useRef<string>('');
-  const typingTimer = useRef<ReturnType<typeof setTimeout>>();
+  const typingTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
 
   // Open state
   const [open, setOpen] = useControlledOrUncontrolled({
@@ -74,33 +71,30 @@ export const useSelectState = <T>({
 
   // Focuses and scrolls to the option, pinning it to the top or bottom of the
   // scroll area. The default focus behavior scrolls inconsistently.
-  const focusOption = useCallback(
-    (index: number) => {
-      const dropdownEl = dropdownRef.current;
-      const optionEl = optionRefs.current[index];
-      if (!optionEl || !dropdownEl) {
-        focusIndexWhenSet.current = index;
-        return;
-      }
-      focusIndexWhenSet.current = undefined;
+  const focusOption = useCallback((index: number) => {
+    const dropdownEl = dropdownRef.current;
+    const optionEl = optionRefs.current[index];
+    if (!optionEl || !dropdownEl) {
+      focusIndexWhenSet.current = index;
+      return;
+    }
+    focusIndexWhenSet.current = undefined;
 
-      const dropdownHeight = dropdownEl.clientHeight;
-      const dropdownScrollTop = dropdownEl.scrollTop;
-      const dropdownScrollEnd = dropdownEl.scrollTop + dropdownHeight;
-      const optionTop = optionEl.offsetTop;
-      const optionHeight = optionEl.offsetHeight;
-      const optionBottom = optionEl.offsetTop + optionEl.offsetHeight;
+    const dropdownHeight = dropdownEl.clientHeight;
+    const dropdownScrollTop = dropdownEl.scrollTop;
+    const dropdownScrollEnd = dropdownEl.scrollTop + dropdownHeight;
+    const optionTop = optionEl.offsetTop;
+    const optionHeight = optionEl.offsetHeight;
+    const optionBottom = optionEl.offsetTop + optionEl.offsetHeight;
 
-      if (optionTop < dropdownScrollTop) {
-        dropdownEl.scrollTo(0, optionTop);
-      }
-      if (optionBottom > dropdownScrollEnd) {
-        dropdownEl.scrollTo(0, optionTop - dropdownHeight + optionHeight);
-      }
-      optionEl.focus({ preventScroll: true });
-    },
-    [dropdownRef]
-  );
+    if (optionTop < dropdownScrollTop) {
+      dropdownEl.scrollTo(0, optionTop);
+    }
+    if (optionBottom > dropdownScrollEnd) {
+      dropdownEl.scrollTo(0, optionTop - dropdownHeight + optionHeight);
+    }
+    optionEl.focus({ preventScroll: true });
+  }, []);
 
   // Activates an option relatively or absolutely
   const activateOption = useCallback(
@@ -115,7 +109,7 @@ export const useSelectState = <T>({
       { scroll }: { scroll?: boolean } = {}
     ) => {
       const lastIndex = options.length - 1;
-      let index;
+      let index: number;
       switch (indexOrOption) {
         case 'first': {
           index = 0;
@@ -148,7 +142,7 @@ export const useSelectState = <T>({
         focusOption(index);
       }
     },
-    [activeIndex, options, focusOption]
+    [options, focusOption]
   );
 
   // Opens the dropdown and activates the selected option
@@ -280,7 +274,7 @@ export const useSelectState = <T>({
         }
         case 'cycleFirstLetter': {
           const currentOptionIndex = select
-            ? selectedIndex.current ?? -1
+            ? (selectedIndex.current ?? -1)
             : activeIndex.current;
           let foundOptionIndex = options.findIndex(
             (option, index) =>

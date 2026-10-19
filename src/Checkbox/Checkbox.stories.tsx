@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-
-import { ComponentMeta } from '@storybook/react';
+import type { Meta } from '@storybook/react-vite';
+import type React from 'react';
+import { useState } from 'react';
 import { Checkbox, GroupBox, ScrollView } from 'react95';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.material};
@@ -22,7 +22,7 @@ export default {
   title: 'Controls/Checkbox',
   component: Checkbox,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Checkbox>;
+} as Meta<typeof Checkbox>;
 
 export function Default() {
   const [state, setState] = useState({

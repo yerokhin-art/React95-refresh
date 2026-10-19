@@ -1,5 +1,5 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import { useState } from 'react';
 import { Checkbox, GroupBox, ScrollView, Window, WindowContent } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +12,7 @@ export default {
   title: 'Controls/GroupBox',
   component: GroupBox,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof GroupBox>;
+} as Meta<typeof GroupBox>;
 
 export function Default() {
   return (

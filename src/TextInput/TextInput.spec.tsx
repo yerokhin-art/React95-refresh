@@ -1,7 +1,7 @@
 // Pretty much straight out copied from https://github.com/mui-org/material-ui 😂
 
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import React from 'react';
 
 import { renderWithTheme } from '../../test/utils';
 import { TextInput } from './TextInput';
@@ -15,11 +15,11 @@ describe('<TextInput />', () => {
   });
 
   it('should fire event callbacks', () => {
-    const handleChange = jest.fn();
-    const handleFocus = jest.fn();
-    const handleBlur = jest.fn();
-    const handleKeyUp = jest.fn();
-    const handleKeyDown = jest.fn();
+    const handleChange = vi.fn();
+    const handleFocus = vi.fn();
+    const handleBlur = vi.fn();
+    const handleKeyUp = vi.fn();
+    const handleKeyDown = vi.fn();
     const { getByRole } = renderWithTheme(
       <TextInput
         onChange={handleChange}

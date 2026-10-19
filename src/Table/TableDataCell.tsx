@@ -1,6 +1,7 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type TableDataCellProps = {
   children?: React.ReactNode;
@@ -23,4 +24,4 @@ const TableDataCell = forwardRef<HTMLTableCellElement, TableDataCellProps>(
 
 TableDataCell.displayName = 'TableDataCell';
 
-export { TableDataCell, TableDataCellProps };
+export { TableDataCell, type TableDataCellProps };

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { renderWithTheme } from '../../test/utils';
 
 import { WindowContent } from './WindowContent';

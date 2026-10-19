@@ -1,8 +1,9 @@
-import React, { forwardRef } from 'react';
-import styled, { CSSProperties } from 'styled-components';
+import type React from 'react';
+import { forwardRef } from 'react';
+import styled, { type CSSProperties } from 'styled-components';
 
 import { createBorderStyles, createBoxStyles } from '../common';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type AppBarProps = {
   children: React.ReactNode;
@@ -12,11 +13,15 @@ type AppBarProps = {
 } & React.HTMLAttributes<HTMLElement> &
   CommonStyledProps;
 
-const StyledAppBar = styled.header<AppBarProps>`
+const StyledAppBar = styled.header<{
+  $fixed?: boolean;
+  $position?: CSSProperties['position'];
+}>`
   ${createBorderStyles()};
   ${createBoxStyles()};
 
-  position: ${props => props.position ?? (props.fixed ? 'fixed' : 'absolute')};
+  position: ${props =>
+    props.$position ?? (props.$fixed ? 'fixed' : 'absolute')};
   top: 0;
   right: 0;
   left: auto;
@@ -29,8 +34,8 @@ const AppBar = forwardRef<HTMLElement, AppBarProps>(
   ({ children, fixed = true, position = 'fixed', ...otherProps }, ref) => {
     return (
       <StyledAppBar
-        fixed={fixed}
-        position={fixed !== false ? position : undefined}
+        $fixed={fixed}
+        $position={fixed !== false ? position : undefined}
         ref={ref}
         {...otherProps}
       >
@@ -42,4 +47,4 @@ const AppBar = forwardRef<HTMLElement, AppBarProps>(
 
 AppBar.displayName = 'AppBar';
 
-export { AppBar, AppBarProps };
+export { AppBar, type AppBarProps };

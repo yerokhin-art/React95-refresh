@@ -1,4 +1,4 @@
-import { NumberInput, NumberInputProps } from '../NumberInput/NumberInput';
+import { NumberInput, type NumberInputProps } from '../NumberInput/NumberInput';
 
 /** @deprecated Use `NumberInputProps` */
 export type NumberFieldProps = NumberInputProps;

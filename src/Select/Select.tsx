@@ -1,4 +1,5 @@
-import React, {
+import type React from 'react';
+import {
   forwardRef,
   useCallback,
   useImperativeHandle,
@@ -7,7 +8,7 @@ import React, {
 } from 'react';
 
 import { useId } from '../common/hooks/useId';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 import {
   StyledDropdownMenu,
@@ -15,7 +16,7 @@ import {
   StyledInner,
   StyledSelectContent
 } from './Select.styles';
-import { SelectOption, SelectInnerProps, SelectRef } from './Select.types';
+import type { SelectInnerProps, SelectOption, SelectRef } from './Select.types';
 import { useSelectCommon } from './useSelectCommon';
 import { useSelectState } from './useSelectState';
 
@@ -178,8 +179,8 @@ function SelectInner<T>(
       !selectedOption
         ? ''
         : typeof formatDisplay === 'function'
-        ? formatDisplay(selectedOption)
-        : selectedOption.label,
+          ? formatDisplay(selectedOption)
+          : selectedOption.label,
     [formatDisplay, selectedOption]
   );
   const tabIndex = isEnabled ? 1 : undefined;
@@ -276,16 +277,13 @@ function SelectInner<T>(
   );
 }
 
-/* eslint-disable no-use-before-define */
 const Select = forwardRef(SelectInner) as <T>(
   props: SelectProps<T> & { ref?: React.ForwardedRef<SelectRef> }
 ) => ReturnType<typeof SelectInner<T>>;
-/* eslint-enable no-use-before-define */
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-expect-error
 Select.displayName = 'Select';
 
 export * from './SelectNative';
 
-export { Select, SelectProps };
+export { Select, type SelectProps };

@@ -1,4 +1,4 @@
-import { TreeView, TreeViewProps } from '../TreeView/TreeView';
+import { TreeView, type TreeViewProps } from '../TreeView/TreeView';
 
 /** @deprecated Use `TreeViewProps` */
 export type TreeProps<T> = TreeViewProps<T>;

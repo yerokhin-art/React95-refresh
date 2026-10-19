@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 type ToolbarProps = {
@@ -6,11 +7,11 @@ type ToolbarProps = {
   noPadding?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const StyledToolbar = styled.div<ToolbarProps>`
+const StyledToolbar = styled.div<{ $noPadding?: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
-  padding: ${props => (props.noPadding ? '0' : '4px')};
+  padding: ${props => (props.$noPadding ? '0' : '4px')};
 `;
 
 const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
@@ -18,7 +19,7 @@ const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
   ref
 ) {
   return (
-    <StyledToolbar noPadding={noPadding} ref={ref} {...otherProps}>
+    <StyledToolbar $noPadding={noPadding} ref={ref} {...otherProps}>
       {children}
     </StyledToolbar>
   );

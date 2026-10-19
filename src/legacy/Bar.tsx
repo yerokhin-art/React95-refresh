@@ -1,4 +1,4 @@
-import { Handle, HandleProps } from '../Handle/Handle';
+import { Handle, type HandleProps } from '../Handle/Handle';
 
 /** @deprecated Use `HandleProps` */
 export type BarProps = HandleProps;

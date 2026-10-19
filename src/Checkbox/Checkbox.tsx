@@ -1,17 +1,18 @@
-import React, { forwardRef, useCallback } from 'react';
+import type React from 'react';
+import { forwardRef, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import { createHatchedBackground } from '../common';
 import useControlledOrUncontrolled from '../common/hooks/useControlledOrUncontrolled';
 import {
   LabelText,
-  size,
   StyledInput,
-  StyledLabel
+  StyledLabel,
+  size
 } from '../common/SwitchBase';
 import { noOp } from '../common/utils';
 import { StyledScrollView } from '../ScrollView/ScrollView';
-import { CommonThemeProps } from '../types';
+import type { CommonThemeProps } from '../types';
 
 type CheckboxProps = {
   checked?: boolean;
@@ -76,9 +77,7 @@ const StyledFlatCheckbox = styled.div<CommonThemeProps>`
     $disabled ? theme.flatLight : theme.canvas};
 `;
 
-const CheckmarkIcon = styled.span.attrs(() => ({
-  'data-testid': 'checkmarkIcon'
-}))<CheckmarkProps>`
+const CheckmarkIcon = styled.span<CheckmarkProps>`
   display: inline-block;
   position: relative;
   width: 100%;
@@ -102,9 +101,7 @@ const CheckmarkIcon = styled.span.attrs(() => ({
       p.$disabled ? p.theme.checkmarkDisabled : p.theme.checkmark};
   }
 `;
-const IndeterminateIcon = styled.span.attrs(() => ({
-  'data-testid': 'indeterminateIcon'
-}))<CheckmarkProps>`
+const IndeterminateIcon = styled.span<CheckmarkProps>`
   display: inline-block;
   position: relative;
 
@@ -167,10 +164,13 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const CheckboxComponent = CheckboxComponents[variant];
 
     let Icon = null;
+    let iconTestId: string | undefined;
     if (indeterminate) {
       Icon = IndeterminateIcon;
+      iconTestId = 'indeterminateIcon';
     } else if (state) {
       Icon = CheckmarkIcon;
+      iconTestId = 'checkmarkIcon';
     }
 
     return (
@@ -187,7 +187,13 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           {...otherProps}
         />
         <CheckboxComponent $disabled={disabled} role='presentation'>
-          {Icon && <Icon $disabled={disabled} variant={variant} />}
+          {Icon && (
+            <Icon
+              data-testid={iconTestId}
+              $disabled={disabled}
+              variant={variant}
+            />
+          )}
         </CheckboxComponent>
         {label && <LabelText>{label}</LabelText>}
       </StyledLabel>
@@ -197,4 +203,4 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
 Checkbox.displayName = 'Checkbox';
 
-export { Checkbox, CheckboxProps };
+export { Checkbox, type CheckboxProps };

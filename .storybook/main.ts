@@ -1,47 +1,22 @@
-import type { StorybookConfig } from '@storybook/react/types';
-import type { PropItem } from 'react-docgen-typescript';
-
-const path = require('path');
+import path from 'node:path';
+import type { StorybookConfig } from '@storybook/react-vite';
 
 const storybookConfig: StorybookConfig = {
-  stories: ['../@(docs|src)/**/*.stories.@(tsx|mdx)'],
-  addons: [
-    {
-      name: '@storybook/addon-docs',
-      options: {
-        sourceLoaderOptions: {
-          injectStoryParameters: false
-        }
-      }
-    },
-    '@storybook/addon-storysource',
-    './theme-picker/register.ts'
-  ],
-  core: {
-    builder: 'webpack5'
-  },
-  features: {
-    babelModeV7: true,
-    storyStoreV7: true,
-    modernInlineRender: true,
-    postcss: false
+  stories: ['../docs/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
+  addons: ['@storybook/addon-docs'],
+  framework: {
+    name: '@storybook/react-vite',
+    options: {}
   },
   typescript: {
-    check: false,
-    checkOptions: {},
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop: PropItem) =>
-        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true
-    }
+    reactDocgen: 'react-docgen'
   },
-  webpackFinal: config => {
+  viteFinal: async config => {
     config.resolve = {
       ...config.resolve,
       alias: {
         ...config.resolve?.alias,
-        react95: path.resolve(__dirname, '../src/index')
+        react95: path.resolve(import.meta.dirname, '../src/index.ts')
       }
     };
 
@@ -49,4 +24,4 @@ const storybookConfig: StorybookConfig = {
   }
 };
 
-module.exports = storybookConfig;
+export default storybookConfig;

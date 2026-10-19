@@ -1,19 +1,15 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "alwaysStrict": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "jsx": "react",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "module": "Node16",
-    "moduleResolution": "Node",
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -23,28 +19,24 @@
     "noUnusedParameters": true,
     "outDir": "./lib",
     "paths": {
-      "react95": [
-        "./src"
-      ]
+      "react95": ["./src/index.ts"]
     },
     "resolveJsonModule": true,
     "rootDir": "./",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "target": "ES2018"
+    "target": "ES2022",
+    "types": ["vitest/globals", "node"]
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "test/**/*.ts",
+    "test/**/*.tsx",
+    "types/**/*.d.ts",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
   ],
-  "exclude": [
-    "coverage",
-    "dist",
-    "node_modules",
-    "storybook"
-  ]
+  "exclude": ["coverage", "dist", "node_modules", "storybook"]
 }

@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { Hourglass } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +11,7 @@ export default {
   title: 'Other/Hourglass',
   component: Hourglass,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Hourglass>;
+} as Meta<typeof Hourglass>;
 
 export function Default() {
   return <Hourglass size={32} style={{ margin: 20 }} />;

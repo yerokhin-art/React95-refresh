@@ -1,4 +1,4 @@
-import { TextInput, TextInputProps } from '../TextInput/TextInput';
+import { TextInput, type TextInputProps } from '../TextInput/TextInput';
 
 /** @deprecated Use `TextInputProps` */
 export type TextFieldProps = TextInputProps;

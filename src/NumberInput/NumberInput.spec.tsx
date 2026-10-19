@@ -1,5 +1,4 @@
 import { fireEvent } from '@testing-library/react';
-import React from 'react';
 
 import { renderWithTheme } from '../../test/utils';
 import { NumberInput } from './NumberInput';
@@ -7,19 +6,19 @@ import { NumberInput } from './NumberInput';
 // TODO: should we pass number or string to callbacks?
 describe('<NumberInput />', () => {
   it('should call onChange on spin buttons click', () => {
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
 
     const { getByTestId } = renderWithTheme(
       <NumberInput onChange={handleChange} defaultValue={2} />
     );
     const spinButton = getByTestId('increment');
-    spinButton.click();
+    fireEvent.click(spinButton);
     expect(handleChange).toHaveBeenCalledTimes(1);
     expect(handleChange).toHaveBeenCalledWith(3);
   });
 
   it('should call onChange on blur after keyboard input', () => {
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
     const { container } = renderWithTheme(
       <NumberInput onChange={handleChange} defaultValue={0} />
     );
@@ -28,7 +27,7 @@ describe('<NumberInput />', () => {
     fireEvent.change(input, { target: { value: '777' } });
 
     expect(handleChange).toHaveBeenCalledTimes(0);
-    input.blur();
+    fireEvent.blur(input);
 
     expect(handleChange).toHaveBeenCalledTimes(1);
     expect(handleChange).toHaveBeenCalledWith(777);
@@ -36,7 +35,7 @@ describe('<NumberInput />', () => {
 
   // TODO: this test passes even tho it fails in real-life
   it('should not call onChange on blur, when clicked element is one of the spin buttons', () => {
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
 
     const { getByTestId, container } = renderWithTheme(
       <NumberInput onChange={handleChange} value={0} />
@@ -48,12 +47,12 @@ describe('<NumberInput />', () => {
     fireEvent.keyDown(document.activeElement as HTMLInputElement, {
       key: '2'
     });
-    incrementButton.click();
+    fireEvent.click(incrementButton);
     expect(handleChange).toHaveBeenCalledTimes(1);
   });
 
   it('should give correct result after user changes input value and then clicks increment button', () => {
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
     const { container, getByTestId } = renderWithTheme(
       <NumberInput onChange={handleChange} defaultValue={0} />
     );
@@ -61,7 +60,7 @@ describe('<NumberInput />', () => {
     const incrementButton = getByTestId('increment');
 
     fireEvent.change(input, { target: { value: '2' } });
-    incrementButton.click();
+    fireEvent.click(incrementButton);
 
     expect(handleChange).toHaveBeenCalledWith(3);
   });
@@ -72,7 +71,7 @@ describe('<NumberInput />', () => {
     );
     const input = container.querySelector('input') as HTMLInputElement;
     const incrementButton = getByTestId('increment');
-    incrementButton.click();
+    fireEvent.click(incrementButton);
 
     expect(input.value).toBe('100');
   });
@@ -83,7 +82,7 @@ describe('<NumberInput />', () => {
     );
     const input = container.querySelector('input') as HTMLInputElement;
     const decrementButton = getByTestId('decrement');
-    decrementButton.click();
+    fireEvent.click(decrementButton);
 
     expect(input.value).toBe('0');
   });
@@ -95,7 +94,7 @@ describe('<NumberInput />', () => {
       );
       const input = container.querySelector('input') as HTMLInputElement;
       const incrementButton = getByTestId('increment');
-      incrementButton.click();
+      fireEvent.click(incrementButton);
 
       expect(input.value).toBe('1');
     });
@@ -106,7 +105,7 @@ describe('<NumberInput />', () => {
       );
       const input = container.querySelector('input') as HTMLInputElement;
       const decrementButton = getByTestId('decrement');
-      decrementButton.click();
+      fireEvent.click(decrementButton);
 
       expect(input.value).toBe('7');
     });
@@ -117,7 +116,7 @@ describe('<NumberInput />', () => {
       );
       const input = container.querySelector('input') as HTMLInputElement;
       const decrementButton = getByTestId('decrement');
-      decrementButton.click();
+      fireEvent.click(decrementButton);
 
       expect(input.value).toBe('9.7');
     });
@@ -145,10 +144,10 @@ describe('<NumberInput />', () => {
       const incrementButton = getByTestId('increment');
       const decrementButton = getByTestId('decrement');
 
-      incrementButton.click();
+      fireEvent.click(incrementButton);
       expect(input.value).toBe('10');
 
-      decrementButton.click();
+      fireEvent.click(decrementButton);
       expect(input.value).toBe('10');
     });
   });

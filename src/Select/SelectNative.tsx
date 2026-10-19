@@ -1,9 +1,10 @@
-import React, { forwardRef, useCallback } from 'react';
+import type React from 'react';
+import { forwardRef, useCallback } from 'react';
 
 import { noOp } from '../common/utils';
 
 import { StyledInner, StyledNativeSelect } from './Select.styles';
-import { SelectCommonProps } from './Select.types';
+import type { SelectCommonProps } from './Select.types';
 import { useSelectCommon } from './useSelectCommon';
 
 type SelectNativeProps = SelectCommonProps<string> &
@@ -82,4 +83,4 @@ const SelectNative = forwardRef<HTMLSelectElement, SelectNativeProps>(
 
 SelectNative.displayName = 'SelectNative';
 
-export { SelectNative, SelectNativeProps };
+export { SelectNative, type SelectNativeProps };

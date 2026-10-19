@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { Anchor } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +11,7 @@ export default {
   title: 'Typography/Anchor',
   component: Anchor,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Anchor>;
+} as Meta<typeof Anchor>;
 
 export function Default() {
   return (

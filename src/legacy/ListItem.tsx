@@ -1,6 +1,6 @@
 import {
   MenuListItem,
-  MenuListItemProps,
+  type MenuListItemProps,
   StyledMenuListItem
 } from '../MenuList/MenuList';
 

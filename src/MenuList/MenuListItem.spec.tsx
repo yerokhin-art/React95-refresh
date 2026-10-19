@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { fireEvent } from '@testing-library/react';
 import { renderWithTheme, theme } from '../../test/utils';
 import { blockSizes } from '../common/system';
 import { MenuListItem } from './MenuListItem';
@@ -40,12 +39,12 @@ describe('<MenuListItem />', () => {
   //   });
   describe('prop: disabled', () => {
     it('should not trigger onClick callback', () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { getByRole } = renderWithTheme(
         <MenuListItem disabled onClick={clickHandler} />
       );
       const menuListItem = getByRole('menuitem') as HTMLElement;
-      menuListItem.click();
+      fireEvent.click(menuListItem);
       expect(clickHandler).not.toBeCalled();
       expect(menuListItem).toHaveAttribute('aria-disabled', 'true');
     });
@@ -62,12 +61,12 @@ describe('<MenuListItem />', () => {
   });
   describe('prop: onClick', () => {
     it('should be called when clicked', () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { getByRole } = renderWithTheme(
         <MenuListItem onClick={clickHandler} />
       );
       const menuListItem = getByRole('menuitem') as HTMLElement;
-      menuListItem.click();
+      fireEvent.click(menuListItem);
       expect(clickHandler).toHaveBeenCalledTimes(1);
     });
   });

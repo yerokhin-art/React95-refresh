@@ -1,4 +1,4 @@
-import { ScrollView, ScrollViewProps } from '../ScrollView/ScrollView';
+import { ScrollView, type ScrollViewProps } from '../ScrollView/ScrollView';
 
 /** @deprecated Use `ScrollViewProps` */
 export type CutoutProps = ScrollViewProps;

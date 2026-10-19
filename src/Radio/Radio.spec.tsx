@@ -1,5 +1,5 @@
-import React from 'react';
-
+import { fireEvent } from '@testing-library/react';
+import type React from 'react';
 import { renderWithTheme } from '../../test/utils';
 import { Radio } from './Radio';
 
@@ -14,13 +14,15 @@ describe('<Radio />', () => {
 
   describe('prop: onChange', () => {
     it('should be called when Radio is clicked', () => {
-      const handleChange = jest.fn(event => event.target.checked);
+      const handleChange = vi.fn(
+        (event: React.ChangeEvent<HTMLInputElement>) => event.target.checked
+      );
 
       const { getByRole } = renderWithTheme(
         <Radio onChange={handleChange} value='swag' />
       );
 
-      getByRole('radio').click();
+      fireEvent.click(getByRole('radio'));
 
       expect(handleChange).toHaveBeenCalledTimes(1);
     });
@@ -28,13 +30,13 @@ describe('<Radio />', () => {
 
   describe('prop: disabled', () => {
     it('should disable radio', () => {
-      const handleChange = jest.fn();
+      const handleChange = vi.fn();
 
       const { getByRole } = renderWithTheme(<Radio disabled />);
       const checkbox = getByRole('radio');
       expect(checkbox).toHaveAttribute('disabled');
 
-      checkbox.click();
+      fireEvent.click(checkbox);
       expect(handleChange).not.toHaveBeenCalled();
     });
     it('should be overridden by props', () => {

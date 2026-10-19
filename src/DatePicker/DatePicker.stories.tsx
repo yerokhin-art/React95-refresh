@@ -1,6 +1,4 @@
-/* eslint-disable camelcase, react/jsx-pascal-case */
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { DatePicker__UNSTABLE } from 'react95';
 import styled from 'styled-components';
 
@@ -13,7 +11,7 @@ export default {
   title: 'DatePicker__UNSTABLE',
   component: DatePicker__UNSTABLE,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof DatePicker__UNSTABLE>;
+} as Meta<typeof DatePicker__UNSTABLE>;
 
 export function Default() {
   return <DatePicker__UNSTABLE onAccept={date => console.log(date)} />;

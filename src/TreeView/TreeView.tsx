@@ -1,9 +1,10 @@
-import React, { forwardRef, useCallback } from 'react';
+import type React from 'react';
+import { forwardRef, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import useControlledOrUncontrolled from '../common/hooks/useControlledOrUncontrolled';
 import { LabelText, StyledLabel } from '../common/SwitchBase';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type TreeLeaf<T> = {
   disabled?: boolean;
@@ -66,12 +67,12 @@ const focusedElementStyles = css<{ $disabled: boolean }>`
       : `cursor: default;`}
 `;
 
-const TreeWrapper = styled.ul<{ isRootLevel: boolean }>`
+const TreeWrapper = styled.ul<{ $isRootLevel: boolean }>`
   position: relative;
   isolation: isolate;
 
-  ${({ isRootLevel }) =>
-    isRootLevel &&
+  ${({ $isRootLevel }) =>
+    $isRootLevel &&
     css`
       &:before {
         content: '';
@@ -103,12 +104,12 @@ const TreeWrapper = styled.ul<{ isRootLevel: boolean }>`
   }
 `;
 
-const TreeItem = styled.li<{ hasItems: boolean; isRootLevel: boolean }>`
+const TreeItem = styled.li<{ $hasItems: boolean; $isRootLevel: boolean }>`
   position: relative;
-  padding-left: ${({ hasItems }) => (!hasItems ? '13px' : '0')};
+  padding-left: ${({ $hasItems }) => (!$hasItems ? '13px' : '0')};
 
-  ${({ isRootLevel }) =>
-    !isRootLevel
+  ${({ $isRootLevel }) =>
+    !$isRootLevel
       ? css`
           &:last-child {
             &:after {
@@ -158,7 +159,7 @@ const Details = styled.details`
   }
 `;
 
-const Summary = styled.summary`
+const Summary = styled.summary<{ $disabled: boolean }>`
   position: relative;
   z-index: 1;
   display: inline-flex;
@@ -231,66 +232,63 @@ function TreeBranch<T>({
 }: TreeBranchProps<T>) {
   const isRootLevel = level === 0;
 
-  const renderLeaf = useCallback(
-    (item: TreeLeaf<T>) => {
-      const hasItems = Boolean(item.items && item.items.length > 0);
-      const isMenuShown = expanded.includes(item.id);
-      const isNodeDisabled = (disabled || item.disabled) ?? false;
-      const onClickSummary = !isNodeDisabled
-        ? (event: React.MouseEvent<HTMLLabelElement>) => select(event, item)
-        : preventDefault;
-      const onClickLeaf = !isNodeDisabled
-        ? (event: React.MouseEvent<HTMLElement>) => select(event, item)
-        : preventDefault;
-      const isSelected = selected === item.id;
-      const icon = <Icon aria-hidden>{item.icon}</Icon>;
+  const renderLeaf = (item: TreeLeaf<T>) => {
+    const hasItems = Boolean(item.items && item.items.length > 0);
+    const isMenuShown = expanded.includes(item.id);
+    const isNodeDisabled = (disabled || item.disabled) ?? false;
+    const onClickSummary = !isNodeDisabled
+      ? (event: React.MouseEvent<HTMLLabelElement>) => select(event, item)
+      : preventDefault;
+    const onClickLeaf = !isNodeDisabled
+      ? (event: React.MouseEvent<HTMLElement>) => select(event, item)
+      : preventDefault;
+    const isSelected = selected === item.id;
+    const icon = <Icon aria-hidden>{item.icon}</Icon>;
 
-      return (
-        <TreeItem
-          key={item.label}
-          isRootLevel={isRootLevel}
-          role='treeitem'
-          aria-expanded={isMenuShown}
-          aria-selected={isSelected}
-          hasItems={hasItems}
-        >
-          {!hasItems ? (
-            <TitleWithIcon
-              as='button'
-              $disabled={isNodeDisabled}
-              onClick={onClickLeaf}
-            >
-              {icon}
-              <Text>{item.label}</Text>
-            </TitleWithIcon>
-          ) : (
-            <Details open={isMenuShown}>
-              <Summary onClick={onClickSummary} $disabled={isNodeDisabled}>
-                <TitleWithIcon $disabled={isNodeDisabled}>
-                  {icon}
-                  <Text>{item.label}</Text>
-                </TitleWithIcon>
-              </Summary>
+    return (
+      <TreeItem
+        key={item.label}
+        $isRootLevel={isRootLevel}
+        role='treeitem'
+        aria-expanded={isMenuShown}
+        aria-selected={isSelected}
+        $hasItems={hasItems}
+      >
+        {!hasItems ? (
+          <TitleWithIcon
+            as='button'
+            $disabled={isNodeDisabled}
+            onClick={onClickLeaf}
+          >
+            {icon}
+            <Text>{item.label}</Text>
+          </TitleWithIcon>
+        ) : (
+          <Details open={isMenuShown}>
+            <Summary onClick={onClickSummary} $disabled={isNodeDisabled}>
+              <TitleWithIcon $disabled={isNodeDisabled}>
+                {icon}
+                <Text>{item.label}</Text>
+              </TitleWithIcon>
+            </Summary>
 
-              {isMenuShown && (
-                <TreeBranch
-                  className={className}
-                  disabled={isNodeDisabled}
-                  expanded={expanded}
-                  level={level + 1}
-                  select={select}
-                  selected={selected}
-                  style={style}
-                  tree={item.items ?? []}
-                />
-              )}
-            </Details>
-          )}
-        </TreeItem>
-      );
-    },
-    [className, disabled, expanded, isRootLevel, level, select, selected, style]
-  );
+            {isMenuShown && (
+              <TreeBranch
+                className={className}
+                disabled={isNodeDisabled}
+                expanded={expanded}
+                level={level + 1}
+                select={select}
+                selected={selected}
+                style={style}
+                tree={item.items ?? []}
+              />
+            )}
+          </Details>
+        )}
+      </TreeItem>
+    );
+  };
 
   return (
     <TreeWrapper
@@ -298,7 +296,7 @@ function TreeBranch<T>({
       style={isRootLevel ? style : undefined}
       ref={isRootLevel ? innerRef : undefined}
       role={isRootLevel ? 'tree' : 'group'}
-      isRootLevel={isRootLevel}
+      $isRootLevel={isRootLevel}
     >
       {tree.map(renderLeaf)}
     </TreeWrapper>
@@ -365,7 +363,7 @@ function TreeInner<T>(
     (event: React.MouseEvent<HTMLElement>, item: TreeLeaf<T>) => {
       event.preventDefault();
       select(event, item.id);
-      if (item.items && item.items.length) {
+      if (item.items?.length) {
         toggleMenu(event, item.id);
       }
     },
@@ -387,15 +385,11 @@ function TreeInner<T>(
   );
 }
 
-/* eslint-disable no-use-before-define */
 const TreeView = forwardRef(TreeInner) as <T>(
-  // eslint-disable-next-line no-use-before-define
   props: TreeViewProps<T> & { ref?: React.ForwardedRef<HTMLUListElement> }
 ) => ReturnType<typeof TreeInner<T>>;
-/* eslint-enable no-use-before-define */
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-expect-error
 TreeView.displayName = 'TreeView';
 
-export { TreeView, TreeViewProps, TreeLeaf };
+export { type TreeLeaf, TreeView, type TreeViewProps };

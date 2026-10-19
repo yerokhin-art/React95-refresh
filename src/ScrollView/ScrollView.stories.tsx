@@ -1,5 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
 import { ScrollView, Window, WindowContent } from 'react95';
 import styled from 'styled-components';
 
@@ -12,7 +11,7 @@ export default {
   title: 'Layout/ScrollView',
   component: ScrollView,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof ScrollView>;
+} as Meta<typeof ScrollView>;
 
 export function Default() {
   return (

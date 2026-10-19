@@ -1,9 +1,8 @@
 // Bsased on https://github.com/mui-org/material-ui
 
 import { fireEvent, screen } from '@testing-library/react';
-import React from 'react';
 import { renderWithTheme } from '../../test/utils';
-import { SelectOption } from './Select.types';
+import type { SelectOption } from './Select.types';
 import { SelectNative } from './SelectNative';
 
 const options: SelectOption<string>[] = [
@@ -28,7 +27,7 @@ describe('<SelectNative />', () => {
     });
 
     it('calls onChange if not disabled or readOnly', () => {
-      const handleChange = jest.fn();
+      const handleChange = vi.fn();
       renderWithTheme(
         <>
           <SelectNative

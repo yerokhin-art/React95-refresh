@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import type React from 'react';
+import { useMemo } from 'react';
 import useControlledOrUncontrolled from '../common/hooks/useControlledOrUncontrolled';
 import {
   StyledDropdownButton,
@@ -7,7 +8,7 @@ import {
   StyledSelectWrapper
 } from './Select.styles';
 
-import { SelectCommonProps, SelectOption } from './Select.types';
+import type { SelectCommonProps, SelectOption } from './Select.types';
 
 const emptyArray: [] = [];
 

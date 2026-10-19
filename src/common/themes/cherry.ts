@@ -2,7 +2,7 @@
  * https://www.deviantart.com/tpenguinltg/art/Cherry-747961418
  */
 
-import { Theme } from './types';
+import type { Theme } from './types';
 
 export default {
   name: 'cherry',

@@ -1,5 +1,6 @@
-import { ComponentMeta } from '@storybook/react';
-import React, { useState } from 'react';
+import type { Meta } from '@storybook/react-vite';
+import type React from 'react';
+import { useState } from 'react';
 import { Button, ScrollView, TextInput } from 'react95';
 import styled from 'styled-components';
 
@@ -22,7 +23,7 @@ export default {
   title: 'Controls/TextInput',
   component: TextInput,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof TextInput>;
+} as Meta<typeof TextInput>;
 
 export function Default() {
   const [state, setState] = useState({

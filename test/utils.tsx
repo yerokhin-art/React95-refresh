@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
-import React from 'react';
+import { type RenderResult, render } from '@testing-library/react';
+import type React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import themes from '../src/common/themes';
 
 export const theme = themes.original;
 
-export const renderWithTheme = (component: React.ReactNode) =>
+export const renderWithTheme = (component: React.ReactNode): RenderResult =>
   render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
 
 export class Touch {

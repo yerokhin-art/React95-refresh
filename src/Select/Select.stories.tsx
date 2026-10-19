@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
-
-import { ComponentMeta } from '@storybook/react';
-import React from 'react';
+import type { Meta } from '@storybook/react-vite';
+import type React from 'react';
 import {
   GroupBox,
   ScrollView,
@@ -12,7 +10,7 @@ import {
 } from 'react95';
 import styled from 'styled-components';
 import { PokemonOptions } from './Select.stories.data';
-import { SelectOption } from './Select.types';
+import type { SelectOption } from './Select.types';
 
 const options = PokemonOptions;
 
@@ -53,7 +51,7 @@ export default {
   title: 'Controls/Select',
   component: Select,
   decorators: [story => <Wrapper>{story()}</Wrapper>]
-} as ComponentMeta<typeof Select>;
+} as Meta<typeof Select>;
 
 export function Default() {
   return (

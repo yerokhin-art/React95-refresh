@@ -1,21 +1,20 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 import { createBorderStyles, createBoxStyles, focusOutline } from '../common';
 import { blockSizes } from '../common/system';
-import { CommonStyledProps } from '../types';
+import type { CommonStyledProps } from '../types';
 
 type TabProps = {
   children?: React.ReactNode;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClick?: (value: any, event: React.MouseEvent<HTMLButtonElement>) => void;
   selected?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value?: any;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'value'> &
   CommonStyledProps;
 
-const StyledTab = styled.button<TabProps>`
+const StyledTab = styled.button<{ $selected?: boolean }>`
   ${createBoxStyles()}
   ${createBorderStyles()}
   position: relative;
@@ -46,7 +45,7 @@ const StyledTab = styled.button<TabProps>`
     outline-offset: -6px;
   }
   ${props =>
-    props.selected &&
+    props.$selected &&
     `
     z-index: 1;
     height: calc(${blockSizes.md} + 4px);
@@ -74,7 +73,7 @@ const Tab = forwardRef<HTMLButtonElement, TabProps>(
     return (
       <StyledTab
         aria-selected={selected}
-        selected={selected}
+        $selected={selected}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
           onClick?.(value, e)
         }
@@ -90,4 +89,4 @@ const Tab = forwardRef<HTMLButtonElement, TabProps>(
 
 Tab.displayName = 'Tab';
 
-export { Tab, TabProps };
+export { Tab, type TabProps };
