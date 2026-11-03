@@ -1,0 +1,22 @@
+---
+description: Anti-patterns and strict "Do Not" rules for React95 Refresh
+alwaysApply: true
+---
+
+# Anti-Patterns — What NOT To Do
+
+## 1. Styling & `styled-components` v6
+- **DO NOT** pass non-standard props directly to `styled.<element>` without either prefixing them with `$` (transient props) or filtering them via `.withConfig({ shouldForwardProp })`. Unfiltered props cause React 19 DOM attribute warnings in tests and runtime.
+- **DO NOT** hardcode hex/RGB colors in components when a semantic token exists on `Theme` (`src/common/themes/types.ts`, e.g., `theme.material`, `theme.canvas`, `theme.borderDark`, `theme.materialText`).
+- **DO NOT** re-implement 3D Windows 95 borders or bevels manually when `createBorderStyles`, `createBoxStyles`, `createFlatBoxStyles`, `createDisabledTextStyles`, or `createHatchedBackground` from `src/common/index.ts` can be used.
+
+## 2. React & Component APIs
+- **DO NOT** violate Rules of React (e.g., reading/writing `ref.current` during render or mutating props/state in render) — code is compiled with `babel-plugin-react-compiler`.
+- **DO NOT** use `findDOMNode`, `ReactDOM.render`, `defaultProps` on function components, or `PropTypes`. Use default parameter values in function signatures and TypeScript types.
+- **DO NOT** use `src/legacy/*` components (`Bar`, `Cutout`, `Desktop`, `Divider`, `Fieldset`, `List`, `ListItem`, `NumberField`, `Panel`, `Progress`, `TextField`, `Tree`) when building stories, tests, or composing components. Use their modern replacements (`Handle`, `ScrollView`, `Monitor`, `Separator`, `GroupBox`, `MenuList`, `MenuListItem`, `NumberInput`, `Frame`, `ProgressBar`, `TextInput`, `TreeView`).
+- **DO NOT** use deprecated prop variants such as `variant='menu'` on `Button` (use `'thin'`), `variant='outside' | 'inside' | 'well'` on `Frame` (use `'window' | 'button' | 'field' | 'status'`), or `createWellBorderStyles` (use `createBorderStyles({ style: 'status' })`).
+
+## 3. Tooling & Repository Hygiene
+- **DO NOT** introduce ESLint, Prettier, Babel config files (`.babelrc`), Rollup, or Jest configurations. Formatting and linting are governed strictly by `biome.json`.
+- **DO NOT** edit generated files in `dist/` or `storybook/` directly — always edit `src/` and run `pnpm build`.
+- **DO NOT** use `npm` or `yarn` lockfiles (`package-lock.json`, `yarn.lock`). Use `pnpm` (`pnpm-lock.yaml`).

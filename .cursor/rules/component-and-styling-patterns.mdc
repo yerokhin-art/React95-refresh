@@ -1,0 +1,55 @@
+---
+description: Component architecture, styled-components v6 patterns, and shared hooks/utilities in src/
+globs: src/**/*.tsx
+alwaysApply: false
+---
+
+# Component & Styling Patterns
+
+## Shared Style Factories (`src/common/index.ts`)
+Always compose Windows 95 UI surfaces using shared helpers from `../common` and sizes from `../common/system`:
+- `createBoxStyles({ background, color })` — Standard box sizing, `theme.material` background, and `theme.materialText` color.
+- `createBorderStyles({ style, invert })` — 3D bevel borders (`'button' | 'buttonPressed' | 'buttonThin' | 'buttonThinPressed' | 'field' | 'grouping' | 'status' | 'window'`) with `box-shadow` support via `$shadow` / `shadow`.
+- `createFlatBoxStyles()` — Flat variant styling (`theme.canvas`, `theme.flatLight`, `theme.flatDark`).
+- `createDisabledTextStyles()` — Disabled text fill and `1px 1px` shadow (`theme.materialTextDisabled`, `theme.materialTextDisabledShadow`).
+- `createHatchedBackground({ mainColor, secondaryColor, pixelSize })` — Checkerboard/dithered pattern.
+- `createScrollbars(variant)` — Custom Windows 95 webkit scrollbars (`'default' | 'flat'`).
+- `focusOutline()` — `2px dotted ${theme.materialText}` focus indicator.
+- `blockSizes` (`src/common/system.ts`) — Standard control heights (`sm: '28px'`, `md: '36px'`, `lg: '44px'`).
+
+## Transient Props & `shouldForwardProp`
+Prevent custom props from reaching the DOM using transient `$` props or `withConfig`:
+
+```tsx
+// ✅ Pattern A: Transient ($) props for internal styled elements
+const StyledFrame = styled.div<
+  { $variant: NonNullable<FrameProps['variant']> } & CommonThemeProps
+>`
+  ${({ $variant }) => createFrameStyles($variant)}
+`;
+
+// ✅ Pattern B: shouldForwardProp Set for exported styled components
+const buttonFilteredProps = new Set([
+  'active',
+  'fullWidth',
+  'primary',
+  'size',
+  'square',
+  'variant'
+]);
+
+export const StyledButton = styled.button.withConfig({
+  shouldForwardProp: prop => !buttonFilteredProps.has(prop)
+})<StyledButtonProps>`...`;
+```
+
+## Shared Hooks, Utilities & Prop Conventions
+- Extend `CommonStyledProps` (`as` prop support) and native HTML element attributes (using `Omit<React.HTMLAttributes<...>, ...>` when overriding event signatures).
+- Reuse `StyledInput`, `StyledLabel`, and `LabelText` from `src/common/SwitchBase.ts` for toggle/checkable controls (`Checkbox`, `Radio`, `TreeView`).
+- Guard interactive handlers when `disabled` is true (e.g., `onClick={disabled ? undefined : onClick}` and default `onTouchStart = noOp`).
+- Use shared utilities in `src/common/utils/`: `noOp`, `clamp`, `getSize`, `roundValueToStep`, `mapFromWindowsTheme`, and event type guards (`isReactFocusEvent`, `isReactKeyboardEvent`, `isReactMouseEvent`).
+- Use shared hooks in `src/common/hooks/`:
+  - `useControlledOrUncontrolled` for components supporting both `value` + `onChange` and `defaultValue`.
+  - `useId` for accessible deterministic/SSR-safe IDs.
+  - `useForkRef` to merge internal refs with forwarded refs.
+  - `useEventCallback` and `useIsFocusVisible` for stable event handlers and keyboard focus rings.

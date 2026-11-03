@@ -1,0 +1,39 @@
+---
+description: Code style, formatting, and TypeScript conventions enforced by Biome and TS 7
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+# Code Style & TypeScript Conventions
+
+## Formatting (Enforced by `biome.json`)
+- **Indentation**: 2 spaces (`indentStyle: "space"`, `indentWidth: 2`).
+- **Line Width**: Max 80 characters (`lineWidth: 80`).
+- **Quotes**: Single quotes (`'single'`) for both TypeScript strings and JSX attributes (`jsxQuoteStyle: "single"`).
+- **Semicolons**: Always required (`semicolons: "always"`).
+- **Trailing Commas**: None (`trailingCommas: "none"`).
+- **Arrow Parentheses**: Omit when single parameter (`arrowParentheses: "asNeeded"`, e.g., `prop => !set.has(prop)`).
+
+## TypeScript & Imports
+- Use explicit `import type` for type-only imports (`import type React from 'react'`, `import type { CommonStyledProps } from '../types'`).
+- `tsconfig.json` enforces `strict: true`, `noUnusedLocals: true`, `noUnusedParameters: true`, and `noImplicitReturns: true`.
+- Export both the component and its props type as named exports at the bottom of the file:
+
+```tsx
+// ✅ GOOD
+Frame.displayName = 'Frame';
+
+export { Frame, type FrameProps };
+```
+
+## Generic `forwardRef` Pattern
+For generic components (`Select<T>`, `TreeView<T>`), declare an inner function and cast `forwardRef`:
+
+```tsx
+const Select = forwardRef(SelectInner) as <T>(
+  props: SelectProps<T> & { ref?: React.ForwardedRef<SelectRef> }
+) => ReturnType<typeof SelectInner<T>>;
+
+// @ts-expect-error
+Select.displayName = 'Select';
+```

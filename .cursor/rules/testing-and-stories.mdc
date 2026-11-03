@@ -1,0 +1,35 @@
+---
+description: Conventions for unit tests (*.spec.tsx) and Storybook stories (*.stories.tsx)
+globs: src/**/*.spec.ts, src/**/*.spec.tsx, src/**/*.stories.tsx
+alwaysApply: false
+---
+
+# Testing & Storybook Conventions
+
+## Unit Tests (`src/**/*.spec.{ts,tsx}`)
+- **Runner & Globals**: Vitest with `globals: true` (`describe`, `it`, `expect`, `vi` are globally available) and `@testing-library/react`.
+- **Theme Rendering**: Use `renderWithTheme` and `theme` (`themes.original`) from `test/utils.tsx` whenever testing theme-dependent styles:
+
+```tsx
+import { fireEvent } from '@testing-library/react';
+import { renderWithTheme, theme } from '../../test/utils';
+import { Button } from './Button';
+
+describe('<Button />', () => {
+  it('should handle disabled style', () => {
+    const { getByRole } = renderWithTheme(<Button disabled>Click</Button>);
+    expect(getByRole('button')).toHaveStyleRule(
+      'color',
+      theme.materialTextDisabled
+    );
+  });
+});
+```
+
+- **Style Assertions**: Use `expect(element).toHaveStyleRule(property, value)` (defined in `test/setup-test.ts`). Note that `toHaveStyleRule` matches base class rules on the element, not pseudo-selectors like `:hover`.
+
+## Storybook Stories (`src/**/*.stories.tsx`)
+- Import `Meta` from `@storybook/react-vite`.
+- Import library components from the `'react95'` path alias (which resolves to `src/index.ts`), not relative paths.
+- Categorize story `title` under `Controls/<Name>`, `Environment/<Name>`, `Layout/<Name>`, or `Other/<Name>`.
+- Export named story functions (`export function Default() { ... }`) with `Default.story = { name: 'default' };`.

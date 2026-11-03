@@ -1,0 +1,23 @@
+---
+description: Rules for creating or updating React95 color themes
+globs: src/common/themes/**/*.ts
+alwaysApply: false
+---
+
+# Theme Authoring Rules
+
+- Every theme in `src/common/themes/<themeName>.ts` must default-export an object typed `as Theme` (imported from `./types`).
+- Every theme must define `name: '<themeName>'` and provide all 30 required color tokens defined in `Theme` (`src/common/themes/types.ts`):
+  - `anchor`, `anchorVisited`
+  - `borderDark`, `borderDarkest`, `borderLight`, `borderLightest`
+  - `canvas`, `canvasText`, `canvasTextDisabled`, `canvasTextDisabledShadow`, `canvasTextInvert`
+  - `checkmark`, `checkmarkDisabled`
+  - `desktopBackground`
+  - `flatDark`, `flatLight`
+  - `focusSecondary`
+  - `headerBackground`, `headerNotActiveBackground`, `headerNotActiveText`, `headerText`
+  - `hoverBackground`
+  - `material`, `materialDark`, `materialText`, `materialTextDisabled`, `materialTextDisabledShadow`, `materialTextInvert`
+  - `progress`, `tooltip`
+- You can use `mapFromWindowsTheme(name, windowsTheme, useGradients)` from `src/common/utils` to map a classic Windows 9x `WindowsTheme` palette (`ActiveTitle`, `ButtonFace`, `ButtonShadow`, etc.) to a React95 `Theme`.
+- When adding a new theme, register and export it in `src/common/themes/index.ts` in alphabetical order so it is available both in `react95-refresh/themes` and `react95-refresh/themes/<themeName>`.
