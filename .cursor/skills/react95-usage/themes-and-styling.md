@@ -27,7 +27,7 @@ When writing custom `styled` components in a consumer project, access `theme` to
 To type `styled-components` `DefaultTheme` in a consumer project (`styled.d.ts`):
 ```ts
 import 'styled-components';
-import type { Theme } from 'react95-refresh/dist/types';
+import type { Theme } from 'react95-refresh/types';
 
 declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
@@ -55,6 +55,6 @@ declare module 'styled-components' {
   - `StyledScrollView` (from `ScrollView`)
   - `StyledMenuListItem` (from `MenuList`)
   - `StyledColorInput` (from `ColorInput`)
-- **Exported Shared Types (`from 'react95-refresh/dist/types'`)**:
+- **Exported Shared Types (`from 'react95-refresh/types'`)**:
   - `Theme`, `WindowsTheme`, `Color`
   - `Sizes` (`'sm' | 'md' | 'lg'`), `Orientation` (`'horizontal' | 'vertical'`), `Direction` (`'up' | 'down' | 'left' | 'right'`), `DimensionValue` (`undefined | number | string`), `CommonStyledProps`, `CommonThemeProps`

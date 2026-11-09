@@ -12,19 +12,26 @@ description: Build Windows 95 UI interfaces using the installed react95-refresh 
 | `react95-refresh` | All UI components, `styleReset`, `createScrollbars`, component `*Props` types, `Styled*` primitives |
 | `react95-refresh/themes/<name>` | Single theme object (tree-shakeable, recommended, e.g. `react95-refresh/themes/original`) |
 | `react95-refresh/themes` | Default export containing all 60 themes (`themes.original`, `themes.tokyoDark`, etc.) |
-| `react95-refresh/dist/types` | Shared TypeScript types (`Theme`, `WindowsTheme`, `Sizes`, `Orientation`, `CommonStyledProps`) |
-| `react95-refresh/dist/fonts/*` | `ms_sans_serif.woff2`, `ms_sans_serif_bold.woff2` (also `.woff`) |
+| `react95-refresh/types` | Shared TypeScript types (`Theme`, `WindowsTheme`, `Sizes`, `Orientation`, `CommonStyledProps`) |
+| `react95-refresh/fonts/*` | `ms_sans_serif.woff2`, `ms_sans_serif_bold.woff2` (also `.woff`) |
 
-## 2. Minimal App Setup (`styled-components` v6)
+## 2. Installation & App Setup
 
-Every app using `react95-refresh` requires `<ThemeProvider theme={...}>` from `styled-components`.
+### Peer Dependencies & Install
+Requires `react >= 19.0.0`, `react-dom >= 19.0.0`, and `styled-components >= 6.0.0`.
+```sh
+pnpm add react95-refresh styled-components
+```
+
+### Provider, Global Styles & Fonts (`styled-components` v6)
+Every app using `react95-refresh` **must** wrap its tree in `<ThemeProvider theme={...}>` from `styled-components` (otherwise components throw on `theme.*` access). For Next.js App Router / SSR, mark the provider wrapper with `'use client'`.
 
 ```tsx
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { createScrollbars, styleReset } from 'react95-refresh';
 import original from 'react95-refresh/themes/original';
-import ms_sans_serif from 'react95-refresh/dist/fonts/ms_sans_serif.woff2';
-import ms_sans_serif_bold from 'react95-refresh/dist/fonts/ms_sans_serif_bold.woff2';
+import ms_sans_serif from 'react95-refresh/fonts/ms_sans_serif.woff2';
+import ms_sans_serif_bold from 'react95-refresh/fonts/ms_sans_serif_bold.woff2';
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}
@@ -53,6 +60,22 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       <ThemeProvider theme={original}>{children}</ThemeProvider>
     </>
   );
+}
+```
+
+### TypeScript Declarations (`src/styled.d.ts`)
+Add module declarations if TypeScript reports missing `.woff2` module types or untyped `theme` in custom `styled` components:
+```ts
+import 'styled-components';
+import type { Theme } from 'react95-refresh/types';
+
+declare module 'styled-components' {
+  export interface DefaultTheme extends Theme {}
+}
+
+declare module '*.woff2' {
+  const src: string;
+  export default src;
 }
 ```
 

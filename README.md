@@ -18,8 +18,8 @@
 
 - **React 19 + React Compiler** — Full support for React 19, native `React.useId`, removal of legacy `findDOMNode`, and pre-compiled bundle output via `babel-plugin-react-compiler`.
 - **styled-components v6** — Migrated to v6 with proper transient (`$`) props and `shouldForwardProp` filtering (zero React DOM attribute warnings).
-- **TypeScript 7** — Strict type definitions with modern ESM (`*.d.mts`) and CJS (`*.d.ts`) package `exports`.
-- **Rolldown (`tsdown`)** — Ultra-fast ESM + CJS builds powered by Rolldown.
+- **TypeScript 7** — Strict type definitions shipped as ESM (`.js` and `.d.ts`).
+- **Rolldown (`tsdown`)** — Ultra-fast ESM build powered by Rolldown.
 - **Vitest 5 & Vite 8** — Modernized test runner and Storybook 10 (`@storybook/react-vite`) environment.
 - **Biome** — Unified, fast linting and code formatting.
 
@@ -46,8 +46,8 @@ import { MenuList, MenuListItem, Separator, styleReset } from 'react95-refresh';
 // pick a theme of your choice
 import original from 'react95-refresh/themes/original';
 // original Windows95 font (optional)
-import ms_sans_serif from 'react95-refresh/dist/fonts/ms_sans_serif.woff2';
-import ms_sans_serif_bold from 'react95-refresh/dist/fonts/ms_sans_serif_bold.woff2';
+import ms_sans_serif from 'react95-refresh/fonts/ms_sans_serif.woff2';
+import ms_sans_serif_bold from 'react95-refresh/fonts/ms_sans_serif_bold.woff2';
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}

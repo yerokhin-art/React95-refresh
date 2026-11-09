@@ -6,7 +6,7 @@ export default defineConfig([
   {
     entry: ['./src/index.ts', './src/types.ts'],
     outDir: 'dist',
-    format: ['cjs', 'esm'],
+    format: 'esm',
     dts: true,
     unbundle: true,
     clean: true,
@@ -21,7 +21,7 @@ export default defineConfig([
   {
     entry: ['./src/common/themes/*.ts'],
     outDir: 'dist/themes',
-    format: ['cjs', 'esm'],
+    format: 'esm',
     dts: true,
     unbundle: true,
     clean: false,
