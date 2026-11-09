@@ -54,7 +54,7 @@
     "build": "tsdown",
     "build:dev": "tsdown",
     "build:prod": "tsdown",
-    "pack": "pnpm build && pnpm pack",
+    "build:pack": "pnpm build && pnpm pack",
     "test": "vitest run",
     "test:ci": "vitest run",
     "test:watch": "vitest",
