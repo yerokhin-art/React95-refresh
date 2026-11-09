@@ -15,6 +15,7 @@
 /images
 /fonts
 /dist
+*.tgz
 
 # storybook
 /storybook
