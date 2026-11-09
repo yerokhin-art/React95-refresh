@@ -13,6 +13,7 @@ alwaysApply: true
 - `src/common/`: Shared style factories (`index.ts`), `styleReset.ts`, sizing tokens (`system.ts`), `SwitchBase.ts`, hooks (`hooks/`), utilities (`utils/`), and 60 themes (`themes/`).
 - `src/legacy/`: Deprecated v3 compatibility wrappers (`Bar`, `Cutout`, `Desktop`, `Divider`, `Fieldset`, `List`, `ListItem`, `NumberField`, `Panel`, `Progress`, `TextField`, `Tree`).
 - `src/index.ts` & `src/types.ts`: Public entry points.
+- `scripts/`: Consumer CLI (`link-agent-skills.ts`) published as the `react95-refresh-skills` bin. It is not part of the component runtime.
 - `test/`: Test setup (`setup-test.ts` with custom `toHaveStyleRule` matcher) and helpers (`utils.tsx` with `renderWithTheme`).
 - `.storybook/` & `docs/`: Storybook 10 (`@storybook/react-vite`) configuration, theme picker addon, and MDX docs.
 
@@ -28,7 +29,7 @@ alwaysApply: true
 
 - **ADR-01 (React 19 + React Compiler)**: Targets `react >= 19.0.0`. Source and build pipelines run `babel-plugin-react-compiler` via `@rolldown/plugin-babel` in both `tsdown.config.mts` and `vitest.config.mts`. Uses native `React.useId` (via `src/common/hooks/useId.ts`) and DOM refs instead of legacy `findDOMNode`. All components and hooks must strictly obey the Rules of React so React Compiler can optimize them.
 - **ADR-02 (`styled-components` v6 Prop Filtering)**: Custom styling props must never leak to underlying DOM nodes. Use transient props (`$disabled`, `$variant`, `$shadow`, `$fullWidth`) or `.withConfig({ shouldForwardProp: prop => !filteredProps.has(prop) })`.
-- **ADR-03 (Unbundled ESM Build & Package Exports via `tsdown`)**: `tsdown` (Rolldown) builds `src/index.ts`, `src/types.ts`, and `src/common/themes/*.ts` with `unbundle: true` as ESM (`.js` / `.d.ts`; `package.json` `"type": "module"`, `"sideEffects": false`). `cpSync` copies `src/assets/fonts/dist` and `src/assets/images` into `dist/`. Public exports expose `.`, `./themes`, `./themes/*`, `./types`, and `./fonts/*`.
+- **ADR-03 (Unbundled ESM Build & Package Exports via `tsdown`)**: `tsdown` (Rolldown) builds `src/index.ts`, `src/types.ts`, and `src/common/themes/*.ts` with `unbundle: true` as ESM (`.js` / `.d.ts`; `package.json` `"type": "module"`, `"sideEffects": false`). `cpSync` copies `src/assets/fonts/dist`, `src/assets/images`, and `.cursor/skills` into `dist/` (`dist/fonts`, `dist/images`, `dist/skills`). A separate entry publishes the optional `react95-refresh-skills` bin at `dist/bin/react95-refresh-skills.js`. Public exports expose `.`, `./themes`, `./themes/*`, `./types`, and `./fonts/*`.
 - **ADR-04 (Biome for Formatting & Linting)**: Biome (`biome.json`) is the single tool for formatting and linting (`src/**`, `test/**`, `.storybook/**`), replacing ESLint and Prettier.
 - **ADR-05 (Vitest + Custom Style Matcher)**: Vitest (`jsdom` environment) replaces Jest. `test/setup-test.ts` implements a custom `toHaveStyleRule(property, expected)` matcher that inspects `style[data-styled]` sheets directly.
 - **ADR-06 (Conventional Commits & Semantic Release)**: Commits follow Conventional Commits (`cz-conventional-changelog`) to drive automated versioning and changelog generation via `semantic-release`.

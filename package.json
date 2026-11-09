@@ -42,6 +42,9 @@
   "files": [
     "/dist"
   ],
+  "bin": {
+    "react95-refresh-skills": "./dist/bin/react95-refresh-skills.js"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -51,14 +54,15 @@
     "build": "tsdown",
     "build:dev": "tsdown",
     "build:prod": "tsdown",
+    "pack": "pnpm build && pnpm pack",
     "test": "vitest run",
     "test:ci": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "typescript": "tsc --noEmit",
-    "lint": "biome check src test .storybook",
-    "lint:fix": "biome check --write src test .storybook",
-    "format": "biome format --write src test .storybook",
+    "lint": "biome check src test .storybook scripts",
+    "lint:fix": "biome check --write src test .storybook scripts",
+    "format": "biome format --write src test .storybook scripts",
     "semantic-release": "semantic-release",
     "cz": "git-cz"
   },

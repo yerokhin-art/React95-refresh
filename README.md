@@ -85,6 +85,16 @@ const App = () => (
 export default App;
 ```
 
+## Cursor agent skill
+
+The package includes a Cursor agent skill for `react95-refresh` component APIs, themes, and callback signatures. Installing the package does not change your project. From the project root, link that skill into `.cursor/skills`:
+
+```sh
+npx react95-refresh-skills
+```
+
+The command creates a relative symlink to `node_modules/react95-refresh/dist/skills`, so the skill stays on the installed version. `--copy` writes a regular copy, `--force` replaces an existing skill directory, and `npx react95-refresh-skills unlink` removes a link created by this command.
+
 ## Contributing
 
 Feel free to open pull requests and submit issues or component proposals in [yerokhin-art/React95-refresh](https://github.com/yerokhin-art/React95-refresh). Let's keep this retro UI alive in the modern React ecosystem! ♥️
